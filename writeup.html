@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>picoCTF 2024 Writeup | mshrinath</title>
+    <meta name="description" content="Detailed writeup for picoCTF 2024 challenges" />
+    <link rel="stylesheet" href="writeups-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    <script src="writeups-script.js" defer></script>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/writeups" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to CTFs</span>
+                </a>
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- CTF Overview Section -->
+        <section class="writeup-header">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="/writeups">CTF Writeups</a>
+                    <i class="fas fa-chevron-right"></i>
+                    <span>picoCTF 2024</span>
+                </div>
+                
+                <h1 class="glitch-text" data-text="picoCTF 2024">picoCTF 2024</h1>
+                
+                <div class="writeup-meta-grid">
+                    <div class="meta-card">
+                        <i class="far fa-calendar"></i>
+                        <div class="meta-content">
+                            <span class="meta-label">Date</span>
+                            <span class="meta-value">March 12-26, 2024</span>
+                        </div>
+                    </div>
+                    <div class="meta-card">
+                        <i class="fas fa-flag-checkered"></i>
+                        <div class="meta-content">
+                            <span class="meta-label">Solved</span>
+                            <span class="meta-value">5 / 100</span>
+                        </div>
+                    </div>
+                    <div class="meta-card">
+                        <i class="fas fa-trophy"></i>
+                        <div class="meta-content">
+                            <span class="meta-label">Rank</span>
+                            <span class="meta-value">#2,345</span>
+                        </div>
+                    </div>
+                    <div class="meta-card">
+                        <i class="fas fa-users"></i>
+                        <div class="meta-content">
+                            <span class="meta-label">Team</span>
+                            <span class="meta-value">Solo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overview-box">
+                    <h2>Overview</h2>
+                    <p>picoCTF 2024 is a beginner-friendly capture the flag competition designed for high school and college students. The challenges covered a wide range of topics including web exploitation, cryptography, reverse engineering, and forensics. Below are my writeups for the challenges I solved.</p>
+                </div>
+
+                <!-- Table of Contents -->
+                <div class="toc-box">
+                    <h3><i class="fas fa-list"></i> Challenges Solved</h3>
+                    <nav class="toc-nav">
+                        <a href="#challenge-1" class="toc-item">
+                            <span class="toc-number">01</span>
+                            <span class="toc-title">Web Gauntlet</span>
+                            <span class="toc-category">Web</span>
+                        </a>
+                        <a href="#challenge-2" class="toc-item">
+                            <span class="toc-number">02</span>
+                            <span class="toc-title">Caesar Cipher</span>
+                            <span class="toc-category">Crypto</span>
+                        </a>
+                        <a href="#challenge-3" class="toc-item">
+                            <span class="toc-number">03</span>
+                            <span class="toc-title">Hidden Flag</span>
+                            <span class="toc-category">Steganography</span>
+                        </a>
+                        <a href="#challenge-4" class="toc-item">
+                            <span class="toc-number">04</span>
+                            <span class="toc-title">Social Media Trail</span>
+                            <span class="toc-category">OSINT</span>
+                        </a>
+                        <a href="#challenge-5" class="toc-item">
+                            <span class="toc-number">05</span>
+                            <span class="toc-title">Buffer Overflow</span>
+                            <span class="toc-category">PWN</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </section>
+
+        <!-- Challenge Writeups -->
+        <section class="challenges-section">
+            <div class="container">
+                
+                <!-- Challenge 1 -->
+                <div id="challenge-1" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">01</div>
+                        <div class="challenge-title-group">
+                            <h2>Web Gauntlet</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge web">Web Exploitation</span>
+                                <span class="points-badge">100 points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>Can you beat the filters? Log in as admin to get the flag. The website implements multiple SQL injection filters that you need to bypass.</p>
+                        <div class="challenge-files">
+                            <span class="file-tag"><i class="fas fa-link"></i> http://challenge.com</span>
+                        </div>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        
+                        <p>The challenge presents a login form with progressive SQL injection filters. Let's break down the approach:</p>
+
+                        <h4>Step 1: Reconnaissance</h4>
+                        <p>First, I inspected the login form and tested basic SQL injection payloads. The site had filters blocking common keywords like <code>OR</code>, <code>AND</code>, and <code>=</code>.</p>
+
+                        <h4>Step 2: Bypassing Filters</h4>
+                        <p>I used case manipulation and alternative operators to bypass the filters:</p>
+                        
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">SQL</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                            <pre><code class="language-sql">admin'/**/OR/**/1/**/LIKE/**/1--</code></pre>
+                        </div>
+
+                        <h4>Step 3: Exploitation</h4>
+                        <p>The payload successfully bypassed all filters by using SQL comments to separate keywords and LIKE operator instead of equals:</p>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">Payload</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                            <pre><code class="language-bash">Username: admin'/**/OR/**/1/**/LIKE/**/1--
+Password: anything</code></pre>
+                        </div>
+
+                        <div class="info-box success">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Success!</strong> The application returned the flag upon successful login.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>picoCTF{sql_1nj3ct10n_m4st3r_abcd1234}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenge 2 -->
+                <div id="challenge-2" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">02</div>
+                        <div class="challenge-title-group">
+                            <h2>Caesar Cipher</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge crypto">Cryptography</span>
+                                <span class="points-badge">50 points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>Decrypt this message that has been encrypted with a Caesar cipher.</p>
+                        <div class="challenge-files">
+                            <span class="file-tag"><i class="fas fa-file"></i> encrypted.txt</span>
+                        </div>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        
+                        <p>Caesar cipher is a simple substitution cipher where each letter is shifted by a fixed number of positions.</p>
+
+                        <h4>Encrypted Message</h4>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">Text</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                            <pre><code>Uljv lv d whvw phvvdjh iru fdhvdu flskhu</code></pre>
+                        </div>
+
+                        <h4>Decryption Script</h4>
+                        <p>I wrote a Python script to brute force all 26 possible shifts:</p>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">Python</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                            <pre><code class="language-python">def caesar_decrypt(text, shift):
+    result = ""
+    for char in text:
+        if char.isalpha():
+            shift_base = ord('A') if char.isupper() else ord('a')
+            result += chr((ord(char) - shift_base - shift) % 26 + shift_base)
+        else:
+            result += char
+    return result
+
+encrypted = "Uljv lv d whvw phvvdjh iru fdhvdu flskhu"
+for i in range(26):
+    print(f"Shift {i}: {caesar_decrypt(encrypted, i)}")</code></pre>
+                        </div>
+
+                        <h4>Result</h4>
+                        <p>After running the script, shift 3 revealed the plaintext message containing the flag.</p>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>picoCTF{cr4ck3d_th3_c0d3_xyz789}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenge 3 - Template with images -->
+                <div id="challenge-3" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">03</div>
+                        <div class="challenge-title-group">
+                            <h2>Hidden Flag</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge steganography">Steganography</span>
+                                <span class="points-badge">75 points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>Find the hidden flag in this image file. Use your forensics skills!</p>
+                        <div class="challenge-files">
+                            <span class="file-tag"><i class="fas fa-file-image"></i> challenge.png</span>
+                        </div>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        
+                        <h4>Step 1: Initial Analysis</h4>
+                        <p>First, I examined the provided image file visually and checked its metadata:</p>
+
+                        <!-- Example: Single image with caption -->
+                        <div class="image-wrapper">
+                            <img src="path/to/challenge-image.png" alt="Challenge image" class="screenshot">
+                            <div class="image-caption">The original challenge image</div>
+                        </div>
+
+                        <h4>Step 2: Using exiftool</h4>
+                        <p>I used exiftool to check for any hidden metadata:</p>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">Bash</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                            <pre><code class="language-bash">exiftool challenge.png</code></pre>
+                        </div>
+
+                        <!-- Example: Terminal screenshot -->
+                        <div class="image-wrapper">
+                            <img src="path/to/terminal-output.png" alt="Terminal output" class="terminal-screenshot">
+                            <div class="image-caption">Output from exiftool showing suspicious metadata</div>
+                        </div>
+
+                        <h4>Step 3: Steganography Detection</h4>
+                        <p>I used steghide to extract hidden data from the image:</p>
+
+                        <!-- Example: Side-by-side comparison -->
+                        <div class="image-grid">
+                            <div class="image-wrapper">
+                                <img src="path/to/before.png" alt="Before extraction">
+                                <div class="image-caption">Before extraction</div>
+                            </div>
+                            <div class="image-wrapper">
+                                <img src="path/to/after.png" alt="After extraction">
+                                <div class="image-caption">After extraction</div>
+                            </div>
+                        </div>
+
+                        <div class="info-box success">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Success!</strong> Found a hidden text file embedded in the image containing the flag.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>picoCTF{h1dd3n_1n_pl41n_s1ght_abc123}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenge 4 - OSINT Example -->
+                <div id="challenge-4" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">04</div>
+                        <div class="challenge-title-group">
+                            <h2>Social Media Trail</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge osint">OSINT</span>
+                                <span class="points-badge">100 points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>Track down information about a user across social media platforms to find the flag.</p>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        <p>Add your OSINT writeup here...</p>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>picoCTF{0s1nt_m4st3r_xyz456}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenge 5 - PWN Example -->
+                <div id="challenge-5" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">05</div>
+                        <div class="challenge-title-group">
+                            <h2>Buffer Overflow</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge pwn">PWN</span>
+                                <span class="points-badge">150 points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>Exploit a buffer overflow vulnerability to gain shell access.</p>
+                        <div class="challenge-files">
+                            <span class="file-tag"><i class="fas fa-file"></i> vuln_binary</span>
+                            <span class="file-tag"><i class="fas fa-server"></i> nc server.com 1337</span>
+                        </div>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        <p>Add your PWN writeup here...</p>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>picoCTF{pwn3d_th3_st4ck_def789}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+        </section>
+
+        <!-- Navigation -->
+        <section class="writeup-navigation">
+            <div class="container">
+                <a href="/writeups" class="nav-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to All CTFs
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 mshrinath</p>
+                <div class="footer-links">
+                    <a href="/">Portfolio</a>
+                    <span class="separator">•</span>
+                    <a href="/writeups">CTF Writeups</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+
+        // Copy code functionality
+        function copyCode(btn) {
+            const codeBlock = btn.closest('.code-block').querySelector('code');
+            navigator.clipboard.writeText(codeBlock.textContent);
+            btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+            }, 2000);
+        }
+
+        // Copy flag functionality
+        function copyFlag(btn) {
+            const flagText = btn.previousElementSibling.textContent;
+            navigator.clipboard.writeText(flagText);
+            btn.innerHTML = '<i class="fas fa-check"></i>';
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-copy"></i>';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
