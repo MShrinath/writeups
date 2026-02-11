@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writeup Generator - Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #64ffda;
+            --bg-dark: #0a192f;
+            --bg-darker: #020c1b;
+            --bg-card: #112240;
+            --text-primary: #ccd6f6;
+            --text-secondary: #8892b0;
+            --border: rgba(100, 255, 218, 0.2);
+            --red: #ff6b6b;
+            --green: #51cf66;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-darker);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-darker);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-darker);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-danger {
+            background: var(--red);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--green);
+            color: var(--bg-dark);
+        }
+
+        .challenge-item {
+            background: var(--bg-darker);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .challenge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .challenge-number {
+            background: var(--primary);
+            color: var(--bg-dark);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .solution-step {
+            background: rgba(100, 255, 218, 0.05);
+            border-left: 3px solid var(--primary);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .step-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .preview-area {
+            background: var(--bg-darker);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 8px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .success-message {
+            background: rgba(81, 207, 102, 0.1);
+            border: 1px solid var(--green);
+            color: var(--green);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .category-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .collapsible:hover {
+            color: var(--primary);
+        }
+
+        .collapse-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .collapse-content.active {
+            max-height: 2000px;
+        }
+
+        .file-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .file-input-group input {
+            flex: 1;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        /* Hide scrollbar but keep functionality */
+        .preview-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .preview-area::-webkit-scrollbar-track {
+            background: var(--bg-card);
+        }
+
+        .preview-area::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-pen-fancy"></i> CTF Writeup Generator</h1>
+        <p class="subtitle">Fill in your CTF details below and generate your writeup HTML</p>
+
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i> <strong>Success!</strong> Your writeup HTML has been generated and copied to clipboard!
+        </div>
+
+        <!-- CTF Info Section -->
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-info-circle"></i> CTF Information</h2>
+            
+            <div class="form-group">
+                <label for="ctfName">CTF Name *</label>
+                <input type="text" id="ctfName" placeholder="e.g., picoCTF 2024" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="ctfDate">Date *</label>
+                    <input type="text" id="ctfDate" placeholder="e.g., March 12-26, 2024">
+                </div>
+
+                <div class="form-group">
+                    <label for="totalChallenges">Total Challenges</label>
+                    <input type="number" id="totalChallenges" placeholder="e.g., 100">
+                </div>
+
+                <div class="form-group">
+                    <label for="rank">Rank</label>
+                    <input type="text" id="rank" placeholder="e.g., #2,345">
+                </div>
+
+                <div class="form-group">
+                    <label for="team">Team</label>
+                    <input type="text" id="team" placeholder="Solo or team name">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="overview">Overview *</label>
+                <textarea id="overview" placeholder="Brief description of the CTF..." rows="3"></textarea>
+            </div>
+        </div>
+
+        <!-- Challenges Section -->
+        <div class="section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 class="section-title"><i class="fas fa-flag"></i> Challenges</h2>
+                <button class="btn btn-primary" onclick="addChallenge()">
+                    <i class="fas fa-plus"></i> Add Challenge
+                </button>
+            </div>
+
+            <div id="challengesContainer"></div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+            <button class="btn btn-success" onclick="generateWriteup()">
+                <i class="fas fa-magic"></i> Generate Writeup HTML
+            </button>
+            <button class="btn btn-secondary" onclick="downloadHTML()">
+                <i class="fas fa-download"></i> Download HTML
+            </button>
+            <button class="btn btn-secondary" onclick="clearAll()">
+                <i class="fas fa-trash"></i> Clear All
+            </button>
+        </div>
+    </div>
+<script src="admin.js"></script>
+</body>
+</html>
