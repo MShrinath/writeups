@@ -293,34 +293,60 @@
             
             <div class="form-group">
                 <label for="ctfName">CTF Name *</label>
-                <input type="text" id="ctfName" placeholder="e.g., picoCTF 2024" required>
+                <input type="text" id="ctfName" placeholder="picoCTF 2024" required>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="ctfDate">Date *</label>
-                    <input type="text" id="ctfDate" placeholder="e.g., March 12-26, 2024">
+                    <label for="ctfMonth">Month *</label>
+                    <select id="ctfMonth">
+                        <option>January</option>
+                        <option>February</option>
+                        <option>March</option>
+                        <option>April</option>
+                        <option>May</option>
+                        <option>June</option>
+                        <option>July</option>
+                        <option>August</option>
+                        <option>September</option>
+                        <option>October</option>
+                        <option>November</option>
+                        <option>December</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="totalChallenges">Total Challenges</label>
-                    <input type="number" id="totalChallenges" placeholder="e.g., 100">
+                    <label for="ctfYear">Year *</label>
+                    <select id="ctfYear">
+                        <option>2026</option>
+                        <option>2025</option>
+                        <option selected>2024</option>
+                        <option>2023</option>
+                        <option>2022</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="rank">Rank</label>
-                    <input type="text" id="rank" placeholder="e.g., #2,345">
+                    <label for="ctfTotal">Total Challenges</label>
+                    <input type="number" id="ctfTotal" placeholder="100">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="ctfRank">Rank</label>
+                    <input type="text" id="ctfRank" placeholder="#123">
                 </div>
 
                 <div class="form-group">
-                    <label for="team">Team</label>
-                    <input type="text" id="team" placeholder="Solo or team name">
+                    <label for="ctfTeam">Team</label>
+                    <input type="text" id="ctfTeam" placeholder="Solo or Team Name">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="overview">Overview *</label>
-                <textarea id="overview" placeholder="Brief description of the CTF..." rows="3"></textarea>
+                <label for="ctfOverview">Overview *</label>
+                <textarea id="ctfOverview" placeholder="Brief description of the CTF..." rows="3"></textarea>
             </div>
         </div>
 
@@ -651,13 +677,15 @@
 
         function generateWriteup() {
             // Get CTF info
+            const ctfMonth = document.getElementById('ctfMonth').value;
+            const ctfYear = document.getElementById('ctfYear').value;
             const ctfData = {
                 name: document.getElementById('ctfName').value,
-                date: document.getElementById('ctfDate').value,
-                total_challenges: document.getElementById('totalChallenges').value,
-                rank: document.getElementById('rank').value,
-                team: document.getElementById('team').value,
-                overview: document.getElementById('overview').value
+                date: ctfMonth + ' ' + ctfYear,
+                total_challenges: document.getElementById('ctfTotal').value,
+                rank: document.getElementById('ctfRank').value,
+                team: document.getElementById('ctfTeam').value,
+                overview: document.getElementById('ctfOverview').value
             };
 
             if (!ctfData.name || !ctfData.overview) {
@@ -1031,11 +1059,10 @@
         function clearAll() {
             if (confirm('Are you sure? This will clear all data!')) {
                 document.getElementById('ctfName').value = '';
-                document.getElementById('ctfDate').value = '';
-                document.getElementById('totalChallenges').value = '';
-                document.getElementById('rank').value = '';
-                document.getElementById('team').value = '';
-                document.getElementById('overview').value = '';
+                document.getElementById('ctfTotal').value = '';
+                document.getElementById('ctfRank').value = '';
+                document.getElementById('ctfTeam').value = '';
+                document.getElementById('ctfOverview').value = '';
                 document.getElementById('challengesContainer').innerHTML = '';
                 challengeCount = 0;
                 stepCounters = {};
