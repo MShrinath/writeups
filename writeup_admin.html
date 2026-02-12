@@ -487,7 +487,7 @@
 
                         <div class="form-group">
                             <label>Category *</label>
-                            <select id="ch${challengeCount}-category">
+                            <select id="ch${challengeCount}-category" onchange="toggleCustomCategory(${challengeCount})">
                                 <option value="web">Web</option>
                                 <option value="crypto">Crypto</option>
                                 <option value="forensics">Forensics</option>
@@ -498,7 +498,9 @@
                                 <option value="misc">Misc</option>
                                 <option value="network">Network</option>
                                 <option value="malware">Malware</option>
+                                <option value="others">Others</option>
                             </select>
+                            <input type="text" id="ch${challengeCount}-custom-category" placeholder="Enter custom category" style="display: none; margin-top: 10px;">
                         </div>
 
                         <div class="form-group">
@@ -617,6 +619,18 @@
         function toggleCollapse(id) {
             const content = document.getElementById(`collapse-${id}`);
             content.classList.toggle('active');
+        }
+
+        function toggleCustomCategory(challengeId) {
+            const select = document.getElementById(`ch${challengeId}-category`);
+            const customInput = document.getElementById(`ch${challengeId}-custom-category`);
+            
+            if (select.value === 'others') {
+                customInput.style.display = 'block';
+            } else {
+                customInput.style.display = 'none';
+                customInput.value = '';
+            }
         }
 
         function escapeHtml(text) {
@@ -743,9 +757,15 @@
             challengeElements.forEach((elem, index) => {
                 const id = elem.id.split('-')[1];
                 
+                let category = document.getElementById(`ch${id}-category`).value;
+                if (category === 'others') {
+                    const customCategory = document.getElementById(`ch${id}-custom-category`).value.trim();
+                    category = customCategory || 'misc';
+                }
+                
                 const challenge = {
                     name: document.getElementById(`ch${id}-name`).value,
-                    category: document.getElementById(`ch${id}-category`).value,
+                    category: category,
                     points: document.getElementById(`ch${id}-points`).value,
                     description: document.getElementById(`ch${id}-description`).value,
                     files: document.getElementById(`ch${id}-files`).value.split('\n').filter(f => f.trim()),
