@@ -276,6 +276,26 @@
             background: var(--primary);
             border-radius: 4px;
         }
+
+        .output-box {
+            background: var(--bg-darker);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .output-box pre {
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -350,10 +370,10 @@
             </div>
         </div>
 
-        <!-- Index Page Code Generator -->
-        <div class="section">
+        <!-- Index Page Card Code Section (Initially Hidden) -->
+        <div class="section" id="indexCardSection" style="display: none;">
             <h2 class="section-title"><i class="fas fa-home"></i> Index Page Card Code</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 20px;">Generate the HTML code for your CTF card to add to the index page</p>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">Customize the card details and generate HTML code for your index page</p>
             
             <div class="form-row">
                 <div class="form-group">
@@ -388,19 +408,9 @@
                 <input type="text" id="indexFilename" placeholder="picoctf2024_writeup.html">
             </div>
 
-            <button class="btn btn-primary" onclick="generateIndexCode()" style="margin-top: 10px;">
+            <button class="btn btn-primary" onclick="generateIndexCardCode()" style="margin-top: 10px;">
                 <i class="fas fa-code"></i> Generate Index Card Code
             </button>
-
-            <div id="indexCodePreview" class="preview-area" style="margin-top: 20px; display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <strong style="color: var(--primary);">Copy this code to your index.html:</strong>
-                    <button class="btn btn-secondary" onclick="copyIndexCode()">
-                        <i class="fas fa-copy"></i> Copy Code
-                    </button>
-                </div>
-                <pre id="indexCodeText" style="background: var(--bg-darker); padding: 15px; border-radius: 6px; overflow-x: auto; color: var(--text-primary); font-family: 'Courier New', monospace; font-size: 0.9rem;"></pre>
-            </div>
         </div>
 
         <!-- Challenges Section -->
@@ -420,12 +430,26 @@
             <button class="btn btn-success" onclick="generateWriteup()">
                 <i class="fas fa-magic"></i> Generate Writeup HTML
             </button>
+            <button class="btn btn-secondary" onclick="generateIndexCard()">
+                <i class="fas fa-home"></i> Generate Index Card
+            </button>
             <button class="btn btn-secondary" onclick="downloadHTML()">
                 <i class="fas fa-download"></i> Download HTML
             </button>
             <button class="btn btn-secondary" onclick="clearAll()">
                 <i class="fas fa-trash"></i> Clear All
             </button>
+        </div>
+
+        <!-- Output Area -->
+        <div class="output-box" id="outputBox">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <strong style="color: var(--primary);">Generated Code:</strong>
+                <button class="btn btn-secondary" onclick="copyOutput()">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+            </div>
+            <pre id="outputText"></pre>
         </div>
     </div>
 
@@ -601,7 +625,32 @@
             return div.innerHTML;
         }
 
-        function generateIndexCode() {
+        function generateIndexCard() {
+            const ctfName = document.getElementById('ctfName').value;
+            const ctfMonth = document.getElementById('ctfMonth').value;
+            const ctfYear = document.getElementById('ctfYear').value;
+            const ctfOverview = document.getElementById('ctfOverview').value;
+            const ctfTeam = document.getElementById('ctfTeam').value;
+            
+            if (!ctfName) {
+                alert('Please fill CTF Name first!');
+                return;
+            }
+
+            // Populate index card fields with CTF info
+            document.getElementById('indexYear').value = ctfYear;
+            document.getElementById('indexMonth').value = ctfMonth;
+            document.getElementById('indexType').value = ctfTeam && ctfTeam.toLowerCase() !== 'solo' ? 'team' : 'solo';
+            document.getElementById('indexDescription').value = ctfOverview;
+            document.getElementById('indexFilename').value = ctfName.toLowerCase().replace(/\s+/g, '_') + '_writeup.html';
+            
+            // Show the index card section
+            const section = document.getElementById('indexCardSection');
+            section.style.display = 'block';
+            section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function generateIndexCardCode() {
             const ctfName = document.getElementById('ctfName').value;
             const year = document.getElementById('indexYear').value;
             const month = document.getElementById('indexMonth').value;
@@ -619,59 +668,53 @@
             const tagsArray = tags.split(',').map(t => t.trim()).filter(t => t);
             let tagsHTML = '';
             for (let i = 0; i < tagsArray.length; i++) {
-                tagsHTML += '                            <span class="tag">' + escapeHtml(tagsArray[i]) + '</span>\n';
+                tagsHTML += '                            <span class="tag">' + escapeHtml(tagsArray[i]) + '</span>\\n';
             }
 
-            let code = '';
-            code += '                    <!-- ' + escapeHtml(ctfName) + ' -->\n';
-            code += '                    <a href="' + escapeHtml(filename) + '" class="ctf-card" data-year="' + escapeHtml(year) + '">\n';
-            code += '                        <div class="ctf-header">\n';
-            code += '                            <div class="ctf-icon">\n';
-            code += '                                <i class="fas fa-flag"></i>\n';
-            code += '                            </div>\n';
-            code += '                            <div class="ctf-badge">' + solvedCount + ' Solved</div>\n';
-            code += '                        </div>\n';
-            code += '                        <h3 class="ctf-title">' + escapeHtml(ctfName) + '</h3>\n';
-            code += '                        <div class="ctf-meta">\n';
-            code += '                            <span class="meta-item">\n';
-            code += '                                <i class="far fa-calendar"></i>\n';
-            code += '                                ' + escapeHtml(month) + ' ' + escapeHtml(year) + '\n';
-            code += '                            </span>\n';
-            code += '                            <span class="meta-item">\n';
-            code += '                                <i class="fas fa-users"></i>\n';
-            code += '                                ' + (type === 'solo' ? 'Solo' : 'Team') + '\n';
-            code += '                            </span>\n';
-            code += '                        </div>\n';
-            code += '                        <p class="ctf-description">\n';
-            code += '                            ' + escapeHtml(description) + '\n';
-            code += '                        </p>\n';
-            code += '                        <div class="ctf-tags">\n';
-            code += tagsHTML;
-            code += '                        </div>\n';
-            code += '                        <div class="ctf-footer">\n';
-            code += '                            <span class="read-more">Read Writeup <i class="fas fa-arrow-right"></i></span>\n';
-            code += '                        </div>\n';
-            code += '                    </a>\n';
+            // If no tags, add a default CTF tag
+            if (!tagsHTML) {
+                tagsHTML = '                            <span class="tag">CTF</span>\\n';
+            }
 
-            document.getElementById('indexCodeText').textContent = code;
-            document.getElementById('indexCodePreview').style.display = 'block';
-            document.getElementById('indexCodePreview').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            let code = '                    <!-- ' + escapeHtml(ctfName) + ' -->\\n';
+            code += '                    <a href="' + escapeHtml(filename) + '" class="ctf-card" data-year="' + escapeHtml(year) + '">\\n';
+            code += '                        <div class="ctf-header">\\n';
+            code += '                            <div class="ctf-icon">\\n';
+            code += '                                <i class="fas fa-flag"></i>\\n';
+            code += '                            </div>\\n';
+            code += '                            <div class="ctf-badge">' + solvedCount + ' Solved</div>\\n';
+            code += '                        </div>\\n';
+            code += '                        <h3 class="ctf-title">' + escapeHtml(ctfName) + '</h3>\\n';
+            code += '                        <div class="ctf-meta">\\n';
+            code += '                            <span class="meta-item">\\n';
+            code += '                                <i class="far fa-calendar"></i>\\n';
+            code += '                                ' + escapeHtml(month) + ' ' + escapeHtml(year) + '\\n';
+            code += '                            </span>\\n';
+            code += '                            <span class="meta-item">\\n';
+            code += '                                <i class="fas fa-users"></i>\\n';
+            code += '                                ' + (type === 'solo' ? 'Solo' : 'Team') + '\\n';
+            code += '                            </span>\\n';
+            code += '                        </div>\\n';
+            code += '                        <p class="ctf-description">\\n';
+            code += '                            ' + escapeHtml(description) + '\\n';
+            code += '                        </p>\\n';
+            code += '                        <div class="ctf-tags">\\n';
+            code += tagsHTML;
+            code += '                        </div>\\n';
+            code += '                        <div class="ctf-footer">\\n';
+            code += '                            <span class="read-more">Read Writeup <i class="fas fa-arrow-right"></i></span>\\n';
+            code += '                        </div>\\n';
+            code += '                    </a>\\n';
+
+            document.getElementById('outputText').textContent = code;
+            document.getElementById('outputBox').style.display = 'block';
+            document.getElementById('outputBox').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function copyIndexCode() {
-            const code = document.getElementById('indexCodeText').textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                const btn = event.target.closest('button');
-                const originalHTML = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                btn.style.background = 'var(--green)';
-                btn.style.color = 'var(--bg-dark)';
-                
-                setTimeout(() => {
-                    btn.innerHTML = originalHTML;
-                    btn.style.background = '';
-                    btn.style.color = '';
-                }, 2000);
+        function copyOutput() {
+            const text = document.getElementById('outputText').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
             });
         }
 
