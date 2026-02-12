@@ -589,10 +589,18 @@
                 `;
             } else if (type === 'image') {
                 content = `
-                    <label>Image Path</label>
-                    <input type="text" class="step-data" data-type="image" placeholder="images/screenshot.png">
-                    <label style="margin-top: 10px;">Caption (optional)</label>
-                    <input type="text" class="step-caption" placeholder="Screenshot description">
+                    <label>Image Type</label>
+                    <select class="step-image-type" onchange="updateImageInputs(${challengeId}, ${stepCounters[challengeId]})" style="margin-bottom: 10px;">
+                        <option value="single">Single Image (with caption)</option>
+                        <option value="terminal">Terminal Screenshot</option>
+                        <option value="grid">Image Grid (side-by-side)</option>
+                    </select>
+                    <div class="image-inputs-container">
+                        <label>Image Path</label>
+                        <input type="text" class="step-data" data-type="image" placeholder="images/screenshot.png">
+                        <label style="margin-top: 10px;">Caption (optional)</label>
+                        <input type="text" class="step-caption" placeholder="Screenshot description">
+                    </div>
                 `;
             }
             
@@ -631,6 +639,57 @@
                 customInput.style.display = 'none';
                 customInput.value = '';
             }
+        }
+
+        function updateImageInputs(challengeId, stepId) {
+            const stepDiv = document.getElementById(`ch${challengeId}-step${stepId}`);
+            const imageType = stepDiv.querySelector('.step-image-type').value;
+            const container = stepDiv.querySelector('.image-inputs-container');
+            
+            let html = '';
+            
+            if (imageType === 'single') {
+                html = `
+                    <label>Image Path</label>
+                    <input type="text" class="step-data" data-type="image" placeholder="images/screenshot.png">
+                    <label style="margin-top: 10px;">Caption (optional)</label>
+                    <input type="text" class="step-caption" placeholder="Screenshot description">
+                `;
+            } else if (imageType === 'terminal') {
+                html = `
+                    <label>Terminal Screenshot Path</label>
+                    <input type="text" class="step-data" data-type="image" data-subtype="terminal" placeholder="images/terminal.png">
+                `;
+            } else if (imageType === 'grid') {
+                html = `
+                    <label>Number of Images (2-4)</label>
+                    <input type="number" class="grid-count" value="2" min="2" max="4" onchange="updateGridInputs(${challengeId}, ${stepId})" style="margin-bottom: 10px;">
+                    <div class="grid-images-container">
+                        <label>Image 1 Path</label>
+                        <input type="text" class="grid-image" data-index="0" placeholder="images/img1.png" style="margin-bottom: 10px;">
+                        <label>Image 2 Path</label>
+                        <input type="text" class="grid-image" data-index="1" placeholder="images/img2.png">
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function updateGridInputs(challengeId, stepId) {
+            const stepDiv = document.getElementById(`ch${challengeId}-step${stepId}`);
+            const count = parseInt(stepDiv.querySelector('.grid-count').value);
+            const gridContainer = stepDiv.querySelector('.grid-images-container');
+            
+            let html = '';
+            for (let i = 0; i < count; i++) {
+                html += `
+                    <label>Image ${i + 1} Path</label>
+                    <input type="text" class="grid-image" data-index="${i}" placeholder="images/img${i + 1}.png" style="margin-bottom: ${i < count - 1 ? '10px' : '0'};">
+                `;
+            }
+            
+            gridContainer.innerHTML = html;
         }
 
         function escapeHtml(text) {
@@ -787,12 +846,37 @@
                             content: dataElem.value
                         });
                     } else if (type === 'image') {
-                        const caption = step.querySelector('.step-caption').value;
-                        challenge.solution.push({
-                            type: 'image',
-                            path: dataElem.value,
-                            caption: caption
-                        });
+                        const imageTypeSelect = step.querySelector('.step-image-type');
+                        const imageType = imageTypeSelect ? imageTypeSelect.value : 'single';
+                        
+                        if (imageType === 'single') {
+                            const caption = step.querySelector('.step-caption');
+                            challenge.solution.push({
+                                type: 'image',
+                                imageType: 'single',
+                                path: dataElem.value,
+                                caption: caption ? caption.value : ''
+                            });
+                        } else if (imageType === 'terminal') {
+                            challenge.solution.push({
+                                type: 'image',
+                                imageType: 'terminal',
+                                path: dataElem.value
+                            });
+                        } else if (imageType === 'grid') {
+                            const gridImages = step.querySelectorAll('.grid-image');
+                            const images = [];
+                            gridImages.forEach(img => {
+                                if (img.value.trim()) {
+                                    images.push(img.value.trim());
+                                }
+                            });
+                            challenge.solution.push({
+                                type: 'image',
+                                imageType: 'grid',
+                                images: images
+                            });
+                        }
                     } else {
                         challenge.solution.push({
                             type: type,
@@ -1014,12 +1098,23 @@
                     html += '                            <pre><code class="language-' + step.language + '">' + escapeHtml(step.content) + '</code></pre>\n';
                     html += '                        </div>\n';
                 } else if (step.type === 'image') {
-                    html += '                        <div class="image-wrapper">\n';
-                    html += '                            <img src="' + escapeHtml(step.path) + '" alt="' + escapeHtml(step.caption || '') + '" class="screenshot">\n';
-                    if (step.caption) {
-                        html += '                            <div class="image-caption">' + escapeHtml(step.caption) + '</div>\n';
+                    if (step.imageType === 'terminal') {
+                        html += '                        <img src="' + escapeHtml(step.path) + '" class="terminal-screenshot">\n';
+                    } else if (step.imageType === 'grid') {
+                        html += '                        <div class="image-grid">\n';
+                        for (let m = 0; m < step.images.length; m++) {
+                            html += '                            <img src="' + escapeHtml(step.images[m]) + '" alt="Image ' + (m + 1) + '" class="screenshot">\n';
+                        }
+                        html += '                        </div>\n';
+                    } else {
+                        // Single image (default)
+                        html += '                        <div class="image-wrapper">\n';
+                        html += '                            <img src="' + escapeHtml(step.path) + '" alt="' + escapeHtml(step.caption || '') + '" class="screenshot">\n';
+                        if (step.caption) {
+                            html += '                            <div class="image-caption">' + escapeHtml(step.caption) + '</div>\n';
+                        }
+                        html += '                        </div>\n';
                     }
-                    html += '                        </div>\n';
                 }
             }
             
