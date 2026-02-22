@@ -485,6 +485,7 @@ function generateHTML(ctf, challenges) {
     html += '    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">\n';
     html += '    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"><\/script>\n';
     html += '    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer><\/script>\n';
+    html += '    <script src="/assets/js/base.js" defer><\/script>\n';
     html += '    <script src="/assets/js/writeup.js" defer><\/script>\n';
     html += '</head>\n';
     html += '<body>\n';
