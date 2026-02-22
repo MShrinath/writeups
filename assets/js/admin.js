@@ -716,9 +716,9 @@ function generateFooter() {
     html += '            <div class="footer-content">\n';
     html += '                <p>&copy; 2026 mshrinath</p>\n';
     html += '                <div class="footer-links">\n';
-    html += '                    <a href="/">Portfolio</a>\n';
+    html += '                    <a href="https://github.com/mshrinath" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>\n';
     html += '                    <span class="separator">•</span>\n';
-    html += '                    <a href="/">CTF Writeups</a>\n';
+    html += '                    <a href="https://linkedin.com/in/mshrinath" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> LinkedIn</a>\n';
     html += '                </div>\n';
     html += '            </div>\n';
     html += '        </div>\n';
