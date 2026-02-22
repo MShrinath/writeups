@@ -25,8 +25,9 @@
 
 .ctf-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 30px;
+    align-items: stretch;
 }
 
 .ctf-card {
@@ -35,7 +36,8 @@
     border-radius: 12px;
     padding: 30px;
     transition: all 0.3s ease;
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: relative;
     overflow: hidden;
 }
@@ -115,12 +117,6 @@
     color: var(--primary);
 }
 
-.ctf-description {
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
 .ctf-tags {
     display: flex;
     gap: 8px;
@@ -140,6 +136,7 @@
 .ctf-footer {
     border-top: 1px solid var(--border);
     padding-top: 15px;
+    margin-top: auto;
 }
 
 .read-more {
