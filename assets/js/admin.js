@@ -291,7 +291,6 @@ function generateIndexCardCode() {
     const type = document.getElementById('indexType').value;
     const indexTeamName = document.getElementById('indexTeamName').value.trim();
     const tags = document.getElementById('indexTags').value;
-    const description = document.getElementById('indexDescription').value;
     const filename = document.getElementById('indexFilename').value;
     const solvedCount = document.querySelectorAll('.challenge-item').length;
 
@@ -301,43 +300,42 @@ function generateIndexCardCode() {
     }
 
     const tagsArray = tags.split(',').map(t => t.trim()).filter(t => t);
+    if (!tagsArray.length) tagsArray.push('CTF');
+
+    const teamIcon = type === 'solo' ? 'fa-user' : 'fa-users';
+    const teamText = type === 'solo' ? 'Solo Participation' : (indexTeamName ? 'Team: ' + escapeHtml(indexTeamName) : 'Team');
+
     let tagsHTML = '';
-    for (let i = 0; i < tagsArray.length; i++) {
-        tagsHTML += '                            <span class="tag">' + escapeHtml(tagsArray[i]) + '</span>\\n';
+    for (const tag of tagsArray) {
+        tagsHTML += '                            <span class="tag">' + escapeHtml(tag) + '</span>\n';
     }
 
-    // If no tags, add a default CTF tag
-    if (!tagsHTML) {
-        tagsHTML = '                            <span class="tag">CTF</span>\\n';
-    }
-
-    let code = '                    <!-- ' + escapeHtml(ctfName) + ' -->\\n';
-    code += '                    <a href="' + escapeHtml(filename) + '" class="ctf-card" data-year="' + escapeHtml(year) + '">\\n';
-    code += '                        <div class="ctf-header">\\n';
-    code += '                            <div class="ctf-icon">\\n';
-    code += '                                <i class="fas fa-trophy"></i>\n';
-    code += '                            </div>\\n';
-    code += '                            <div class="ctf-badge">' + solvedCount + ' Solved</div>\\n';
-    code += '                        </div>\\n';
-    code += '                        <h3 class="ctf-title">' + escapeHtml(ctfName) + '</h3>\\n';
-    code += '                        <div class="ctf-meta">\\n';
-    code += '                            <span class="meta-item">\\n';
-    code += '                                <i class="far fa-calendar"></i>\\n';
-    code += '                                ' + escapeHtml(month) + ' ' + escapeHtml(year) + '\\n';
-    code += '                            </span>\\n';
-    code += '                            <span class="meta-item">\\n';
-    code += '                                <i class="fas ' + (type === 'solo' ? 'fa-user' : 'fa-users') + '"></i>\n';
-    code += '                                ' + (type === 'solo' ? 'Solo Participation' : (indexTeamName ? 'Team: ' + indexTeamName : 'Team')) + '\n';
-    code += '                            </span>\\n';
-    code += '                        </div>\\n';
-
-    code += '                        <div class="ctf-tags">\\n';
-    code += tagsHTML;
-    code += '                        </div>\\n';
-    code += '                        <div class="ctf-footer">\\n';
-    code += '                            <span class="read-more">Read Writeup <i class="fas fa-arrow-right"></i></span>\\n';
-    code += '                        </div>\\n';
-    code += '                    </a>\\n';
+    const code =
+`                    <!-- ${escapeHtml(ctfName)} -->
+                    <a class="ctf-card" href="${escapeHtml(filename)}" data-year="${escapeHtml(year)}">
+                        <div class="ctf-header">
+                            <div class="ctf-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="ctf-badge">${solvedCount} Solved</div>
+                        </div>
+                        <h3 class="ctf-title">${escapeHtml(ctfName)}</h3>
+                        <div class="ctf-meta">
+                            <span class="meta-item">
+                                <i class="far fa-calendar"></i>
+                                ${escapeHtml(month)} ${escapeHtml(year)}
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas ${teamIcon}"></i>
+                                ${teamText}
+                            </span>
+                        </div>
+                        <div class="ctf-tags">
+${tagsHTML}                        </div>
+                        <div class="ctf-footer">
+                            <span class="read-more">Read Writeup <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>`;
 
     document.getElementById('outputText').textContent = code;
     document.getElementById('outputBox').style.display = 'block';
