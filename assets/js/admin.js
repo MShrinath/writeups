@@ -493,12 +493,12 @@ function generateHTML(ctf, challenges) {
     html += '    <header class="main-header">\n';
     html += '        <div class="container">\n';
     html += '            <div class="header-content">\n';
-    html += '                <a href="/writeups" class="back-link">\n';
+    html += '                <a href="/" class="back-link">\n';
     html += '                    <i class="fas fa-arrow-left"></i>\n';
     html += '                    <span>Back to CTFs</span>\n';
     html += '                </a>\n';
     html += '                <a href="/" class="nav-link">\n';
-    html += '                    <i class="fas fa-home"></i>\n';
+    html += '                    <i class="fas fa-home"></i> Portfolio\n';
     html += '                </a>\n';
     html += '            </div>\n';
     html += '        </div>\n';
@@ -525,7 +525,7 @@ function generateHeaderSection(ctf, challenges) {
     html += '        <section class="writeup-header">\n';
     html += '            <div class="container">\n';
     html += '                <div class="breadcrumb">\n';
-    html += '                    <a href="/writeups">CTF Writeups</a>\n';
+    html += '                    <a href="/">CTF Writeups</a>\n';
     html += '                    <i class="fas fa-chevron-right"></i>\n';
     html += '                    <span>' + escapeHtml(ctf.name) + '</span>\n';
     html += '                </div>\n\n';
@@ -698,7 +698,7 @@ function generateNavigationSection() {
     
     html += '        <section class="writeup-navigation">\n';
     html += '            <div class="container">\n';
-    html += '                <a href="/writeups" class="nav-btn">\n';
+    html += '                <a href="/" class="nav-btn">\n';
     html += '                    <i class="fas fa-arrow-left"></i>\n';
     html += '                    Back to All CTFs\n';
     html += '                </a>\n';
@@ -718,7 +718,7 @@ function generateFooter() {
     html += '                <div class="footer-links">\n';
     html += '                    <a href="/">Portfolio</a>\n';
     html += '                    <span class="separator">•</span>\n';
-    html += '                    <a href="/writeups">CTF Writeups</a>\n';
+    html += '                    <a href="/">CTF Writeups</a>\n';
     html += '                </div>\n';
     html += '            </div>\n';
     html += '        </div>\n';
