@@ -185,6 +185,20 @@ function toggleCustomCategory(challengeId) {
     }
 }
 
+function toggleTeamNameInput() {
+    const select = document.getElementById('ctfTeam');
+    const teamNameInput = document.getElementById('ctfTeamName');
+    teamNameInput.style.display = select.value === 'team' ? 'block' : 'none';
+    if (select.value === 'solo') teamNameInput.value = '';
+}
+
+function toggleIndexTeamNameInput() {
+    const select = document.getElementById('indexType');
+    const teamNameInput = document.getElementById('indexTeamName');
+    teamNameInput.style.display = select.value === 'team' ? 'block' : 'none';
+    if (select.value === 'solo') teamNameInput.value = '';
+}
+
 function updateImageInputs(challengeId, stepId) {
     const stepDiv = document.getElementById(`ch${challengeId}-step${stepId}`);
     const imageType = stepDiv.querySelector('.step-image-type').value;
@@ -257,7 +271,10 @@ function generateIndexCard() {
     // Populate index card fields with CTF info
     document.getElementById('indexYear').value = ctfYear;
     document.getElementById('indexMonth').value = ctfMonth;
-    document.getElementById('indexType').value = ctfTeam && ctfTeam.toLowerCase() !== 'solo' ? 'team' : 'solo';
+    document.getElementById('indexType').value = ctfTeam;
+    const teamNameVal = document.getElementById('ctfTeamName').value;
+    document.getElementById('indexTeamName').value = teamNameVal;
+    document.getElementById('indexTeamName').style.display = ctfTeam === 'team' ? 'block' : 'none';
     document.getElementById('indexDescription').value = ctfOverview;
     document.getElementById('indexFilename').value = ctfName.toLowerCase().replace(/\s+/g, '_') + '_writeup.html';
     
@@ -272,6 +289,7 @@ function generateIndexCardCode() {
     const year = document.getElementById('indexYear').value;
     const month = document.getElementById('indexMonth').value;
     const type = document.getElementById('indexType').value;
+    const indexTeamName = document.getElementById('indexTeamName').value.trim();
     const tags = document.getElementById('indexTags').value;
     const description = document.getElementById('indexDescription').value;
     const filename = document.getElementById('indexFilename').value;
@@ -297,7 +315,7 @@ function generateIndexCardCode() {
     code += '                    <a href="' + escapeHtml(filename) + '" class="ctf-card" data-year="' + escapeHtml(year) + '">\\n';
     code += '                        <div class="ctf-header">\\n';
     code += '                            <div class="ctf-icon">\\n';
-    code += '                                <i class="fas fa-flag"></i>\\n';
+    code += '                                <i class="fas fa-trophy"></i>\n';
     code += '                            </div>\\n';
     code += '                            <div class="ctf-badge">' + solvedCount + ' Solved</div>\\n';
     code += '                        </div>\\n';
@@ -308,13 +326,11 @@ function generateIndexCardCode() {
     code += '                                ' + escapeHtml(month) + ' ' + escapeHtml(year) + '\\n';
     code += '                            </span>\\n';
     code += '                            <span class="meta-item">\\n';
-    code += '                                <i class="fas fa-users"></i>\\n';
-    code += '                                ' + (type === 'solo' ? 'Solo' : 'Team') + '\\n';
+    code += '                                <i class="fas ' + (type === 'solo' ? 'fa-user' : 'fa-users') + '"></i>\n';
+    code += '                                ' + (type === 'solo' ? 'Solo Participation' : (indexTeamName ? 'Team: ' + indexTeamName : 'Team')) + '\n';
     code += '                            </span>\\n';
     code += '                        </div>\\n';
-    code += '                        <p class="ctf-description">\\n';
-    code += '                            ' + escapeHtml(description) + '\\n';
-    code += '                        </p>\\n';
+
     code += '                        <div class="ctf-tags">\\n';
     code += tagsHTML;
     code += '                        </div>\\n';
@@ -344,7 +360,7 @@ function generateWriteup() {
         date: ctfMonth + ' ' + ctfYear,
         total_challenges: document.getElementById('ctfTotal').value,
         rank: document.getElementById('ctfRank').value,
-        team: document.getElementById('ctfTeam').value,
+        team: document.getElementById('ctfTeam').value === 'solo' ? 'Solo' : ('Team: ' + (document.getElementById('ctfTeamName').value.trim() || 'Team')),
         overview: document.getElementById('ctfOverview').value
     };
 
@@ -541,7 +557,7 @@ function generateHeaderSection(ctf, challenges) {
     html += '                        </div>\n';
     html += '                    </div>\n';
     html += '                    <div class="meta-card">\n';
-    html += '                        <i class="fas fa-users"></i>\n';
+    html += '                        <i class="fas ' + (ctf.team === 'Solo' ? 'fa-user' : 'fa-users') + '"></i>\n';
     html += '                        <div class="meta-content">\n';
     html += '                            <span class="meta-label">Team</span>\n';
     html += '                            <span class="meta-value">' + (escapeHtml(ctf.team) || 'Solo') + '</span>\n';
@@ -764,7 +780,9 @@ function clearAll() {
         document.getElementById('ctfName').value = '';
         document.getElementById('ctfTotal').value = '';
         document.getElementById('ctfRank').value = '';
-        document.getElementById('ctfTeam').value = '';
+        document.getElementById('ctfTeam').value = 'solo';
+        document.getElementById('ctfTeamName').value = '';
+        document.getElementById('ctfTeamName').style.display = 'none';
         document.getElementById('ctfOverview').value = '';
         document.getElementById('challengesContainer').innerHTML = '';
         challengeCount = 0;

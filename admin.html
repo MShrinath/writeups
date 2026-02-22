@@ -69,7 +69,11 @@
 
                 <div class="form-group">
                     <label for="ctfTeam">Team</label>
-                    <input type="text" id="ctfTeam" placeholder="Solo or Team Name">
+                    <select id="ctfTeam" onchange="toggleTeamNameInput()">
+                        <option value="solo">Solo</option>
+                        <option value="team">Team</option>
+                    </select>
+                    <input type="text" id="ctfTeamName" placeholder="Team name" style="display: none; margin-top: 10px;">
                 </div>
             </div>
 
@@ -95,10 +99,11 @@
                 </div>
                 <div class="form-group">
                     <label for="indexType">Type</label>
-                    <select id="indexType">
+                    <select id="indexType" onchange="toggleIndexTeamNameInput()">
                         <option value="solo">Solo</option>
                         <option value="team">Team</option>
                     </select>
+                    <input type="text" id="indexTeamName" placeholder="Team name" style="display: none; margin-top: 10px;">
                 </div>
             </div>
 
