@@ -478,6 +478,7 @@ function generateHTML(ctf, challenges) {
     html += '    <meta charset="UTF-8">\n';
     html += '    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
     html += '    <title>' + escapeHtml(ctf.name) + ' Writeup | mshrinath</title>\n';
+    html += '    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">\n';
     html += '    <meta name="description" content="Detailed writeup for ' + escapeHtml(ctf.name) + ' challenges" />\n';
     html += '    <link rel="stylesheet" href="/assets/css/base.css">\n';
     html += '    <link rel="stylesheet" href="/assets/css/writeup.css">\n';
