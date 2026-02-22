@@ -1,5 +1,5 @@
 /* ===========================
-   RESET & VARIABLES
+    RESET & VARIABLES
 =========================== */
 * {
     margin: 0;
@@ -54,7 +54,7 @@ a {
 }
 
 /* ===========================
-   HEADER
+    HEADER
 =========================== */
 .main-header {
     background: rgba(10, 25, 47, 0.9);
@@ -113,7 +113,7 @@ a {
 }
 
 /* ===========================
-   FOOTER
+    FOOTER
 =========================== */
 footer {
     background: var(--bg-card);
@@ -172,7 +172,7 @@ footer p {
 }
 
 /* ===========================
-   GLITCH TEXT
+    GLITCH TEXT
 =========================== */
 .glitch-text {
     font-size: 3.5rem;
@@ -191,7 +191,7 @@ footer p {
 }
 
 /* ===========================
-   SCROLL PROGRESS BAR
+    SCROLL PROGRESS BAR
 =========================== */
 #scroll-progress {
     position: fixed;
@@ -205,7 +205,7 @@ footer p {
 }
 
 /* ===========================
-   RESPONSIVE
+    RESPONSIVE
 =========================== */
 @media (max-width: 768px) {
     .footer-content {
@@ -214,6 +214,39 @@ footer p {
     }
     
     .glitch-text {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+    }
+
+    footer {
+        padding: 30px 0;
+        margin-top: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 14px;
+    }
+
+    .glitch-text {
+        font-size: 1.7rem;
+    }
+
+    .logo span {
+        font-size: 0.95rem;
+    }
+
+    .nav-link {
+        font-size: 0.85rem;
+        padding: 5px 8px;
+    }
+
+    /* Prevent header items from overflowing on very small phones */
+    .header-content {
+        gap: 8px;
+    }
+
+    .back-link span {
+        display: none; /* show only the arrow icon on tiny screens */
     }
 }

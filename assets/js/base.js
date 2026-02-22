@@ -4,11 +4,13 @@
 function initParticles() {
     if (!window.particlesJS) return;
 
+    const isMobile = window.innerWidth < 768;
+
     setTimeout(() => {
         particlesJS('particles-js', {
             particles: {
                 number: {
-                    value: 80,
+                    value: isMobile ? 30 : 80,
                     density: {
                         enable: true,
                         value_area: 800
@@ -28,7 +30,7 @@ function initParticles() {
                     random: true
                 },
                 lineLinked: {
-                    enable: true,
+                    enable: !isMobile,
                     distance: 150,
                     color: '#64ffda',
                     opacity: 0.4,
@@ -36,13 +38,13 @@ function initParticles() {
                 },
                 move: {
                     enable: true,
-                    speed: 2
+                    speed: isMobile ? 1 : 2
                 }
             },
             interactivity: {
                 events: {
                     onHover: {
-                        enable: true,
+                        enable: !isMobile,
                         mode: 'repulse'
                     },
                     resize: true

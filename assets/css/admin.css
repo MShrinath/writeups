@@ -288,3 +288,93 @@ select {
     overflow-y: auto;
     margin: 0;
 }
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 768px) {
+    body {
+        padding: 14px;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    .section {
+        padding: 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .challenge-header {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .step-controls {
+        flex-wrap: wrap;
+    }
+
+    .file-input-group {
+        flex-direction: column;
+    }
+
+    .file-input-group input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    .section {
+        padding: 14px;
+        border-radius: 8px;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+        min-height: 44px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+        font-size: 1rem; /* prevents iOS zoom on focus */
+        min-height: 44px;
+    }
+
+    .preview-area {
+        padding: 14px;
+    }
+
+    .output-box {
+        padding: 14px;
+    }
+}

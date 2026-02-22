@@ -1,5 +1,5 @@
 /* ===========================
-   HOMEPAGE - HERO SECTION
+    HOMEPAGE - HERO SECTION
 =========================== */
 .hero-section {
     padding: 100px 0 60px;
@@ -155,7 +155,71 @@
    RESPONSIVE
 =========================== */
 @media (max-width: 768px) {
+    .hero-section {
+        padding: 70px 0 40px;
+    }
+
+    .ctf-list-section {
+        padding: 30px 0 60px;
+    }
+
     .ctf-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .ctf-card {
+        padding: 22px;
+    }
+
+    .ctf-meta {
+        gap: 12px;
+    }
+}
+
+/* Disable hover transforms on touch devices */
+@media (hover: none) {
+    .ctf-card:hover {
+        transform: none;
+        box-shadow: none;
+        border-color: var(--border);
+    }
+
+    .ctf-card:hover::before {
+        transform: scaleX(0);
+    }
+
+    .ctf-card:hover .read-more i {
+        transform: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 50px 0 30px;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        margin-bottom: 40px;
+    }
+
+    .ctf-card {
+        padding: 18px;
+    }
+
+    .ctf-title {
+        font-size: 1.2rem;
+    }
+
+    .ctf-badge {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+    }
+
+    .ctf-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 1.2rem;
     }
 }
