@@ -487,7 +487,20 @@ function generateWriteup() {
     }
 
     // Generate HTML
-    generatedHTML = generateHTML(ctfData, challenges);
+    const sourceData = {
+        ctf: {
+            name: ctfData.name,
+            month: ctfMonth,
+            year: ctfYear,
+            total_challenges: document.getElementById('ctfTotal').value,
+            rank: document.getElementById('ctfRank').value,
+            team: document.getElementById('ctfTeam').value,
+            teamName: document.getElementById('ctfTeam').value === 'team' ? document.getElementById('ctfTeamName').value.trim() : '',
+            overview: ctfData.overview
+        },
+        challenges
+    };
+    generatedHTML = generateHTML(ctfData, challenges, sourceData);
     
     // Copy to clipboard
     navigator.clipboard.writeText(generatedHTML).then(() => {
@@ -501,7 +514,7 @@ function generateWriteup() {
     });
 }
 
-function generateHTML(ctf, challenges) {
+function generateHTML(ctf, challenges, sourceData) {
     let html = '';
     
     // Start building HTML
@@ -547,7 +560,9 @@ function generateHTML(ctf, challenges) {
     
     html += generateFooter();
     html += generateScripts();
-    
+    if (sourceData) {
+        html += '    <script type="application/json" id="writeup-source">' + JSON.stringify(sourceData) + '<\/script>\n';
+    }
     html += '</body>\n';
     html += '</html>';
     
@@ -835,6 +850,331 @@ function clearAll() {
         stepCounters = {};
         generatedHTML = '';
     }
+}
+
+// ─── Save / Load / Import ────────────────────────────────────────────────────
+
+function collectProjectData() {
+    const ctfMonth = document.getElementById('ctfMonth').value;
+    const ctfYear = document.getElementById('ctfYear').value;
+    const ctfTeam = document.getElementById('ctfTeam').value;
+    const challenges = [];
+
+    document.querySelectorAll('.challenge-item').forEach(elem => {
+        const id = elem.id.split('-')[1];
+        let category = document.getElementById(`ch${id}-category`).value;
+        if (category === 'others') {
+            category = document.getElementById(`ch${id}-custom-category`).value.trim() || 'misc';
+        }
+
+        const solution = [];
+        document.querySelectorAll(`#ch${id}-steps .solution-step`).forEach(step => {
+            const dataElem = step.querySelector('.step-data');
+            if (!dataElem) return;
+            const type = dataElem.dataset.type;
+            if (type === 'code') {
+                const lang = step.querySelector('.step-lang');
+                solution.push({ type: 'code', language: lang ? lang.value : 'bash', content: dataElem.value });
+            } else if (type === 'image') {
+                const imageTypeSelect = step.querySelector('.step-image-type');
+                const imageType = imageTypeSelect ? imageTypeSelect.value : 'single';
+                if (imageType === 'grid') {
+                    const images = Array.from(step.querySelectorAll('.grid-image')).map(i => i.value.trim()).filter(Boolean);
+                    solution.push({ type: 'image', imageType: 'grid', images });
+                } else if (imageType === 'terminal') {
+                    solution.push({ type: 'image', imageType: 'terminal', path: dataElem.value });
+                } else {
+                    const caption = step.querySelector('.step-caption');
+                    solution.push({ type: 'image', imageType: 'single', path: dataElem.value, caption: caption ? caption.value : '' });
+                }
+            } else if (type === 'infobox') {
+                const variant = step.querySelector('.step-infobox-type');
+                const title = step.querySelector('.step-infobox-title');
+                solution.push({ type: 'infobox', variant: variant ? variant.value : 'info', title: title ? title.value.trim() : '', content: dataElem.value });
+            } else {
+                solution.push({ type, content: dataElem.value });
+            }
+        });
+
+        challenges.push({
+            name: document.getElementById(`ch${id}-name`).value,
+            category,
+            points: document.getElementById(`ch${id}-points`).value,
+            description: document.getElementById(`ch${id}-description`).value,
+            files: document.getElementById(`ch${id}-files`).value.split('\n').filter(f => f.trim()),
+            flag: document.getElementById(`ch${id}-flag`).value,
+            solution
+        });
+    });
+
+    return {
+        ctf: {
+            name: document.getElementById('ctfName').value,
+            month: ctfMonth,
+            year: ctfYear,
+            total_challenges: document.getElementById('ctfTotal').value,
+            rank: document.getElementById('ctfRank').value,
+            team: ctfTeam,
+            teamName: ctfTeam === 'team' ? document.getElementById('ctfTeamName').value.trim() : '',
+            overview: document.getElementById('ctfOverview').value
+        },
+        challenges
+    };
+}
+
+function extractJSON() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.html';
+    input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = evt => {
+            try {
+                const data = parseHTMLToData(evt.target.result);
+                const json = JSON.stringify(data, null, 2);
+                document.getElementById('outputText').textContent = json;
+                document.getElementById('outputBox').style.display = 'block';
+                document.getElementById('outputBox').scrollIntoView({ behavior: 'smooth' });
+            } catch (err) {
+                alert('Failed to extract JSON: ' + err.message);
+            }
+        };
+        reader.readAsText(file);
+    };
+    input.click();
+}
+
+function saveProject() {
+    const data = collectProjectData();
+    const name = (data.ctf.name || 'writeup').replace(/\s+/g, '_');
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name + '.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+function loadProject() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json,.html';
+    input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = evt => {
+            try {
+                let data;
+                if (file.name.endsWith('.json')) {
+                    data = JSON.parse(evt.target.result);
+                } else {
+                    data = parseHTMLToData(evt.target.result);
+                }
+                populateFromData(data);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (err) {
+                alert('Failed to load file: ' + err.message);
+            }
+        };
+        reader.readAsText(file);
+    };
+    input.click();
+}
+
+function parseHTMLToData(htmlText) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlText, 'text/html');
+
+    // Try embedded JSON first (present in files generated by this tool)
+    const jsonScript = doc.querySelector('#writeup-source');
+    if (jsonScript) {
+        try { return JSON.parse(jsonScript.textContent); } catch(e) {}
+    }
+
+    // Fallback: DOM-parse the known HTML structure
+    const data = { ctf: {}, challenges: [] };
+
+    const glitch = doc.querySelector('.glitch-text');
+    data.ctf.name = glitch ? glitch.getAttribute('data-text') : '';
+
+    const metaValues = doc.querySelectorAll('.meta-card .meta-value');
+    if (metaValues[0]) {
+        const parts = metaValues[0].textContent.trim().split(' ');
+        data.ctf.month = parts[0] || '';
+        data.ctf.year = parts[1] || '';
+    }
+    if (metaValues[1]) {
+        const parts = metaValues[1].textContent.trim().split('/');
+        data.ctf.total_challenges = (parts[1] || '').trim().replace('?', '');
+    }
+    if (metaValues[2]) data.ctf.rank = metaValues[2].textContent.trim();
+    if (metaValues[3]) {
+        const teamText = metaValues[3].textContent.trim();
+        if (teamText === 'Solo') {
+            data.ctf.team = 'solo';
+            data.ctf.teamName = '';
+        } else {
+            data.ctf.team = 'team';
+            data.ctf.teamName = teamText.replace(/^Team:\s*/, '');
+        }
+    }
+
+    const overviewP = doc.querySelector('.overview-box p');
+    data.ctf.overview = overviewP ? overviewP.textContent.trim() : '';
+
+    doc.querySelectorAll('.challenge-writeup').forEach(div => {
+        const ch = { name: '', category: '', points: '', description: '', files: [], flag: '', solution: [] };
+
+        const h2 = div.querySelector('.challenge-title-group h2');
+        ch.name = h2 ? h2.textContent.trim() : '';
+
+        const catBadge = div.querySelector('.category-badge');
+        if (catBadge) {
+            const cat = Array.from(catBadge.classList).find(c => c !== 'category-badge');
+            ch.category = cat || catBadge.textContent.trim().toLowerCase();
+        }
+
+        const pointsBadge = div.querySelector('.points-badge');
+        if (pointsBadge) ch.points = pointsBadge.textContent.replace(/\s*points/, '').replace('?', '').trim();
+
+        const descP = div.querySelector('.challenge-description p');
+        ch.description = descP ? descP.textContent.trim() : '';
+
+        div.querySelectorAll('.file-tag').forEach(tag => {
+            // Strip leading icon text (FontAwesome inserts no text, but just in case)
+            const text = tag.textContent.trim();
+            if (text) ch.files.push(text);
+        });
+
+        const flagCode = div.querySelector('.flag-box code');
+        ch.flag = flagCode ? flagCode.textContent.trim() : '';
+
+        const writeupContent = div.querySelector('.writeup-content');
+        if (writeupContent) {
+            Array.from(writeupContent.children).forEach(elem => {
+                const tag = elem.tagName.toLowerCase();
+                if (tag === 'h3') return;
+                if (tag === 'p') {
+                    ch.solution.push({ type: 'text', content: elem.textContent.trim() });
+                } else if (tag === 'h4') {
+                    ch.solution.push({ type: 'heading', content: elem.textContent.trim() });
+                } else if (elem.classList.contains('code-block')) {
+                    const codeElem = elem.querySelector('code');
+                    const langClass = codeElem ? Array.from(codeElem.classList).find(c => c.startsWith('language-')) : null;
+                    ch.solution.push({ type: 'code', language: langClass ? langClass.replace('language-', '') : 'bash', content: codeElem ? codeElem.textContent.trim() : '' });
+                } else if (tag === 'img' && elem.classList.contains('terminal-screenshot')) {
+                    ch.solution.push({ type: 'image', imageType: 'terminal', path: elem.getAttribute('src') });
+                } else if (elem.classList.contains('image-wrapper')) {
+                    const img = elem.querySelector('img');
+                    const cap = elem.querySelector('.image-caption');
+                    ch.solution.push({ type: 'image', imageType: 'single', path: img ? img.getAttribute('src') : '', caption: cap ? cap.textContent.trim() : '' });
+                } else if (elem.classList.contains('image-grid')) {
+                    ch.solution.push({ type: 'image', imageType: 'grid', images: Array.from(elem.querySelectorAll('img')).map(i => i.getAttribute('src')) });
+                } else if (elem.classList.contains('info-box')) {
+                    const variant = ['success','warning','danger','info'].find(v => elem.classList.contains(v)) || 'info';
+                    const strong = elem.querySelector('strong');
+                    const title = strong ? strong.textContent.trim() : '';
+                    const contentDiv = elem.querySelector('div');
+                    let content = contentDiv ? contentDiv.textContent.trim() : '';
+                    if (title && content.startsWith(title)) content = content.slice(title.length).trim();
+                    ch.solution.push({ type: 'infobox', variant, title, content });
+                }
+            });
+        }
+
+        data.challenges.push(ch);
+    });
+
+    return data;
+}
+
+function populateFromData(data) {
+    document.getElementById('challengesContainer').innerHTML = '';
+    challengeCount = 0;
+    stepCounters = {};
+    generatedHTML = '';
+
+    const ctf = data.ctf || {};
+    document.getElementById('ctfName').value = ctf.name || '';
+    if (ctf.month) document.getElementById('ctfMonth').value = ctf.month;
+    if (ctf.year) document.getElementById('ctfYear').value = ctf.year;
+    document.getElementById('ctfTotal').value = ctf.total_challenges || '';
+    document.getElementById('ctfRank').value = ctf.rank || '';
+    const teamVal = (ctf.team === 'solo' || ctf.team === 'Solo') ? 'solo' : (ctf.team ? 'team' : 'solo');
+    document.getElementById('ctfTeam').value = teamVal;
+    document.getElementById('ctfTeamName').value = ctf.teamName || '';
+    document.getElementById('ctfTeamName').style.display = teamVal === 'team' ? 'block' : 'none';
+    document.getElementById('ctfOverview').value = ctf.overview || '';
+
+    const knownCats = ['web','crypto','forensics','reverse','pwn','osint','steganography','misc','network','malware','hardware','blockchain','mobile','programming','trivia','others'];
+
+    (data.challenges || []).forEach(ch => {
+        addChallenge();
+        const id = challengeCount;
+
+        document.getElementById(`ch${id}-name`).value = ch.name || '';
+
+        const catLower = (ch.category || '').toLowerCase();
+        const catSelect = document.getElementById(`ch${id}-category`);
+        if (knownCats.includes(catLower)) {
+            catSelect.value = catLower;
+        } else {
+            catSelect.value = 'others';
+            document.getElementById(`ch${id}-custom-category`).value = ch.category || '';
+            document.getElementById(`ch${id}-custom-category`).style.display = 'block';
+        }
+
+        document.getElementById(`ch${id}-points`).value = ch.points || '';
+        document.getElementById(`ch${id}-description`).value = ch.description || '';
+        document.getElementById(`ch${id}-files`).value = (ch.files || []).join('\n');
+        document.getElementById(`ch${id}-flag`).value = ch.flag || '';
+
+        (ch.solution || []).forEach(step => {
+            addStep(id, step.type);
+            const stepId = stepCounters[id];
+            const stepElem = document.getElementById(`ch${id}-step${stepId}`);
+
+            if (step.type === 'code') {
+                const langSel = stepElem.querySelector('.step-lang');
+                if (langSel) langSel.value = step.language || 'bash';
+                stepElem.querySelector('.step-data').value = step.content || '';
+            } else if (step.type === 'image') {
+                const typeSel = stepElem.querySelector('.step-image-type');
+                if (typeSel) {
+                    typeSel.value = step.imageType || 'single';
+                    updateImageInputs(id, stepId);
+                }
+                if (step.imageType === 'grid') {
+                    const countInput = stepElem.querySelector('.grid-count');
+                    if (countInput) {
+                        countInput.value = (step.images || []).length;
+                        updateGridInputs(id, stepId);
+                    }
+                    stepElem.querySelectorAll('.grid-image').forEach((inp, i) => {
+                        if (step.images && step.images[i]) inp.value = step.images[i];
+                    });
+                } else {
+                    const dataElem = stepElem.querySelector('.step-data');
+                    if (dataElem) dataElem.value = step.path || '';
+                    if (step.imageType === 'single') {
+                        const cap = stepElem.querySelector('.step-caption');
+                        if (cap) cap.value = step.caption || '';
+                    }
+                }
+            } else if (step.type === 'infobox') {
+                const varSel = stepElem.querySelector('.step-infobox-type');
+                if (varSel) varSel.value = step.variant || 'info';
+                const titleInp = stepElem.querySelector('.step-infobox-title');
+                if (titleInp) titleInp.value = step.title || '';
+                stepElem.querySelector('.step-data').value = step.content || '';
+            } else {
+                stepElem.querySelector('.step-data').value = step.content || '';
+            }
+        });
+    });
 }
 
 // Add first challenge on load

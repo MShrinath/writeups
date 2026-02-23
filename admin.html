@@ -141,18 +141,35 @@
 
         <!-- Actions -->
         <div class="actions">
-            <button class="btn btn-success" onclick="generateWriteup()">
-                <i class="fas fa-magic"></i> Generate Writeup HTML
-            </button>
-            <button class="btn btn-secondary" onclick="generateIndexCard()">
-                <i class="fas fa-home"></i> Generate Index Card
-            </button>
-            <button class="btn btn-secondary" onclick="downloadHTML()">
-                <i class="fas fa-download"></i> Download HTML
-            </button>
-            <button class="btn btn-secondary" onclick="clearAll()">
-                <i class="fas fa-trash"></i> Clear All
-            </button>
+            <div class="action-group">
+                <button class="btn btn-success" onclick="generateWriteup()">
+                    <i class="fas fa-magic"></i> Generate Writeup HTML
+                </button>
+                <button class="btn btn-secondary" onclick="generateIndexCard()">
+                    <i class="fas fa-home"></i> Generate Index Card
+                </button>
+                <button class="btn btn-secondary" onclick="downloadHTML()">
+                    <i class="fas fa-download"></i> Download HTML
+                </button>
+            </div>
+            <div class="action-sep"></div>
+            <div class="action-group">
+                <button class="btn btn-secondary" onclick="saveProject()">
+                    <i class="fas fa-save"></i> Save JSON
+                </button>
+                <button class="btn btn-secondary" onclick="loadProject()">
+                    <i class="fas fa-folder-open"></i> Load / Import
+                </button>
+                <button class="btn btn-secondary" onclick="extractJSON()">
+                    <i class="fas fa-file-export"></i> Extract JSON
+                </button>
+            </div>
+            <div class="action-sep"></div>
+            <div class="action-group">
+                <button class="btn btn-danger" onclick="clearAll()">
+                    <i class="fas fa-trash"></i> Clear All
+                </button>
+            </div>
         </div>
 
         <!-- Output Area -->

@@ -191,9 +191,24 @@ select:focus {
 
 .actions {
     display: flex;
-    gap: 15px;
+    align-items: center;
+    gap: 12px;
     flex-wrap: wrap;
     margin-top: 30px;
+}
+
+.action-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.action-sep {
+    width: 1px;
+    height: 36px;
+    background: var(--border);
+    flex-shrink: 0;
 }
 
 .preview-area {
