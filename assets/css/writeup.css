@@ -450,6 +450,24 @@
     color: var(--green);
 }
 
+.info-box.warning {
+    background: rgba(255, 190, 60, 0.1);
+    border-color: #ffbe3c;
+    color: #ffbe3c;
+}
+
+.info-box.danger {
+    background: rgba(255, 85, 85, 0.1);
+    border-color: #ff5555;
+    color: #ff5555;
+}
+
+.info-box.info {
+    background: rgba(77, 171, 247, 0.1);
+    border-color: var(--secondary);
+    color: var(--secondary);
+}
+
 .info-box strong {
     display: block;
     margin-bottom: 5px;

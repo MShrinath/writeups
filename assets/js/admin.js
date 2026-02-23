@@ -79,6 +79,9 @@ function addChallenge() {
                     <button class="btn btn-secondary" onclick="addStep(${challengeCount}, 'image')">
                         <i class="fas fa-image"></i> Add Image
                     </button>
+                    <button class="btn btn-secondary" onclick="addStep(${challengeCount}, 'infobox')">
+                        <i class="fas fa-info-circle"></i> Add Info Box
+                    </button>
                 </div>
             </div>
 
@@ -130,6 +133,20 @@ function addStep(challengeId, type) {
             </select>
             <label>Code</label>
             <textarea class="step-data" data-type="code" placeholder="Your code here..." rows="4"></textarea>
+        `;
+    } else if (type === 'infobox') {
+        content = `
+            <label>Type</label>
+            <select class="step-infobox-type" style="margin-bottom: 10px;">
+                <option value="success">Success</option>
+                <option value="warning">Warning</option>
+                <option value="danger">Danger</option>
+                <option value="info">Info</option>
+            </select>
+            <label>Title (optional)</label>
+            <input type="text" class="step-infobox-title" placeholder="e.g., Success!" style="margin-bottom: 10px;">
+            <label>Message</label>
+            <textarea class="step-data" data-type="infobox" placeholder="Your message here..." rows="2"></textarea>
         `;
     } else if (type === 'image') {
         content = `
@@ -435,6 +452,15 @@ function generateWriteup() {
                         images: images
                     });
                 }
+            } else if (type === 'infobox') {
+                const variantSelect = step.querySelector('.step-infobox-type');
+                const titleInput = step.querySelector('.step-infobox-title');
+                challenge.solution.push({
+                    type: 'infobox',
+                    variant: variantSelect ? variantSelect.value : 'info',
+                    title: titleInput ? titleInput.value.trim() : '',
+                    content: dataElem.value
+                });
             } else {
                 challenge.solution.push({
                     type: type,
@@ -676,6 +702,19 @@ function generateChallenge(ch, num) {
                 }
                 html += '                        </div>\n';
             }
+        } else if (step.type === 'infobox') {
+            const icons = { success: 'fas fa-check-circle', warning: 'fas fa-exclamation-triangle', danger: 'fas fa-times-circle', info: 'fas fa-info-circle' };
+            const icon = icons[step.variant] || icons.info;
+            html += '                        <div class="info-box ' + step.variant + '">\n';
+            html += '                            <i class="' + icon + '"></i>\n';
+            html += '                            <div>\n';
+            if (step.title) {
+                html += '                                <strong>' + escapeHtml(step.title) + '</strong> ' + escapeHtml(step.content) + '\n';
+            } else {
+                html += '                                ' + escapeHtml(step.content) + '\n';
+            }
+            html += '                            </div>\n';
+            html += '                        </div>\n';
         }
     }
     
