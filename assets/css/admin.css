@@ -32,20 +32,20 @@ body {
 h1 {
     color: var(--primary);
     margin-bottom: 10px;
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
 
 .subtitle {
     color: var(--text-secondary);
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .section {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 30px;
-    margin-bottom: 30px;
+    padding: 25px;
+    margin-bottom: 20px;
 }
 
 .section-title {

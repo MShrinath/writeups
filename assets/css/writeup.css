@@ -2,7 +2,7 @@
    WRITEUP PAGE - HEADER
 =========================== */
 .writeup-header {
-    padding: 100px 0 60px;
+    padding: 50px 0 30px;
 }
 
 .breadcrumb {
@@ -147,7 +147,7 @@
    CHALLENGE WRITEUPS
 =========================== */
 .challenges-section {
-    padding: 40px 0 80px;
+    padding: 20px 0 40px;
 }
 
 .challenge-writeup {
@@ -526,7 +526,7 @@
    NAVIGATION
 =========================== */
 .writeup-navigation {
-    padding: 40px 0 80px;
+    padding: 20px 0 40px;
 }
 
 .nav-btn {
