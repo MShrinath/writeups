@@ -355,7 +355,9 @@ function generateIndexCardCode() {
                         <div class="ctf-tags">
 ${tagsHTML}                        </div>
                         <div class="ctf-footer">
-                            <span class="read-more">Read Writeup <i class="fas fa-arrow-right"></i></span>
+                            <span class="read-more">
+                                Read Writeup <i class="fas fa-arrow-right"></i>
+                            </span>
                         </div>
                     </a>`;
 
