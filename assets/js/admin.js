@@ -42,6 +42,11 @@ function addChallenge() {
                         <option value="misc">Misc</option>
                         <option value="network">Network</option>
                         <option value="malware">Malware</option>
+                        <option value="hardware">Hardware</option>
+                        <option value="blockchain">Blockchain</option>
+                        <option value="mobile">Mobile</option>
+                        <option value="programming">Programming</option>
+                        <option value="trivia">Trivia</option>
                         <option value="others">Others</option>
                     </select>
                     <input type="text" id="ch${challengeCount}-custom-category" placeholder="Enter custom category" style="display: none; margin-top: 10px;">
