@@ -99,6 +99,10 @@ function addChallenge() {
     `;
     
     container.appendChild(challengeDiv);
+
+    // set initial height so collapse works correctly
+    const collapseEl = challengeDiv.querySelector('.collapse-content');
+    expandCollapse(collapseEl);
 }
 
 let stepCounters = {};
@@ -182,6 +186,12 @@ function addStep(challengeId, type) {
     `;
     
     stepsContainer.appendChild(stepDiv);
+
+    // keep collapse height in sync
+    const collapseEl = document.getElementById(`collapse-${challengeId}`);
+    if (collapseEl && collapseEl.classList.contains('active')) {
+        expandCollapse(collapseEl);
+    }
 }
 
 function removeChallenge(id) {
@@ -191,9 +201,18 @@ function removeChallenge(id) {
     }
 }
 
+function expandCollapse(el) {
+    el.style.maxHeight = el.scrollHeight + 'px';
+}
+
 function toggleCollapse(id) {
     const content = document.getElementById(`collapse-${id}`);
-    content.classList.toggle('active');
+    if (content.classList.toggle('active')) {
+        expandCollapse(content);
+    } else {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        requestAnimationFrame(() => { content.style.maxHeight = '0'; });
+    }
 }
 
 function toggleCustomCategory(challengeId) {
@@ -304,7 +323,7 @@ function generateIndexCard() {
     // Show the index card section
     const section = document.getElementById('indexCardSection');
     section.style.display = 'block';
-    section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function generateIndexCardCode() {
@@ -692,6 +711,7 @@ function generateChallenge(ch, num) {
     for (let k = 0; k < ch.solution.length; k++) {
         const step = ch.solution[k];
         if (step.type === 'text') {
+            if (!step.content.trim()) continue;
             html += '                        <p>' + escapeHtml(step.content) + '</p>\n';
         } else if (step.type === 'heading') {
             html += '                        <h4>' + escapeHtml(step.content) + '</h4>\n';
@@ -1029,7 +1049,8 @@ function parseHTMLToData(htmlText) {
                 const tag = elem.tagName.toLowerCase();
                 if (tag === 'h3') return;
                 if (tag === 'p') {
-                    ch.solution.push({ type: 'text', content: elem.textContent.trim() });
+                    const content = elem.textContent.trim();
+                    if (content) ch.solution.push({ type: 'text', content });
                 } else if (tag === 'h4') {
                     ch.solution.push({ type: 'heading', content: elem.textContent.trim() });
                 } else if (elem.classList.contains('code-block')) {
