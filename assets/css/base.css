@@ -54,6 +54,27 @@ a {
 }
 
 /* ===========================
+   CATEGORY COLORS (shared)
+=========================== */
+.category-badge.web,    .toc-category.web,    .tag.web          { background: rgba(255, 107, 107, 0.1); color: #ff6b6b;  border-color: #ff6b6b; }
+.category-badge.crypto, .toc-category.crypto, .tag.crypto       { background: rgba(81, 207, 102, 0.1);  color: #51cf66;  border-color: #51cf66; }
+.category-badge.forensics, .toc-category.forensics, .tag.forensics { background: rgba(77, 171, 247, 0.1);  color: #4dabf7;  border-color: #4dabf7; }
+.category-badge.reverse, .toc-category.reverse, .tag.reverse    { background: rgba(177, 151, 252, 0.1); color: #b197fc;  border-color: #b197fc; }
+.category-badge.pwn,    .toc-category.pwn,    .tag.pwn          { background: rgba(255, 146, 43, 0.1);  color: #ff922b;  border-color: #ff922b; }
+.category-badge.osint,  .toc-category.osint,  .tag.osint        { background: rgba(255, 212, 59, 0.1);  color: #ffd43b;  border-color: #ffd43b; }
+.category-badge.misc,   .toc-category.misc,   .tag.misc         { background: rgba(100, 255, 218, 0.1); color: #64ffda;  border-color: #64ffda; }
+.category-badge.steganography, .toc-category.steganography, .tag.steganography { background: rgba(247, 131, 172, 0.1); color: #f783ac; border-color: #f783ac; }
+.category-badge.network, .toc-category.network, .tag.network    { background: rgba(34, 211, 238, 0.1);  color: #22d3ee;  border-color: #22d3ee; }
+.category-badge.welcome, .toc-category.welcome, .tag.welcome     { background: rgba(255, 190, 76, 0.1);  color: #ffbe4c;  border-color: #ffbe4c; }
+.category-badge.malware                                          { background: rgba(224, 49, 49, 0.1);   color: #e03131;  border-color: #e03131; }
+.category-badge.others                                           { background: rgba(134, 142, 150, 0.1); color: #868e96;  border-color: #868e96; }
+.category-badge.hardware                                         { background: rgba(230, 126, 34, 0.1);  color: #e67e22;  border-color: #e67e22; }
+.category-badge.blockchain                                       { background: rgba(32, 201, 151, 0.1);  color: #20c997;  border-color: #20c997; }
+.category-badge.mobile                                           { background: rgba(116, 192, 252, 0.1); color: #74c0fc;  border-color: #74c0fc; }
+.category-badge.programming                                      { background: rgba(169, 227, 75, 0.1);  color: #a9e34b;  border-color: #a9e34b; }
+.category-badge.trivia                                           { background: rgba(218, 119, 242, 0.1); color: #da77f2;  border-color: #da77f2; }
+
+/* ===========================
     HEADER
 =========================== */
 .main-header {

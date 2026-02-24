@@ -32,6 +32,7 @@ function addChallenge() {
                 <div class="form-group">
                     <label>Category *</label>
                     <select id="ch${challengeCount}-category" onchange="toggleCustomCategory(${challengeCount})">
+                        <option value="welcome">Welcome</option>
                         <option value="web">Web</option>
                         <option value="crypto">Crypto</option>
                         <option value="forensics">Forensics</option>
@@ -329,7 +330,8 @@ function generateIndexCardCode() {
 
     let tagsHTML = '';
     for (const tag of tagsArray) {
-        tagsHTML += '                            <span class="tag">' + escapeHtml(tag) + '</span>\n';
+        const cls = tag.toLowerCase().replace(/\s+/g, '');
+        tagsHTML += '                            <span class="tag ' + cls + '">' + escapeHtml(tag) + '</span>\n';
     }
 
     const code =
@@ -624,7 +626,7 @@ function generateHeaderSection(ctf, challenges) {
         html += '                        <a href="#challenge-' + (i+1) + '" class="toc-item">\n';
         html += '                            <span class="toc-number">' + String(i+1).padStart(2, '0') + '</span>\n';
         html += '                            <span class="toc-title">' + escapeHtml(ch.name) + '</span>\n';
-        html += '                            <span class="toc-category">' + (ch.category.charAt(0).toUpperCase() + ch.category.slice(1)) + '</span>\n';
+        html += '                            <span class="toc-category ' + ch.category + '">' + (ch.category.charAt(0).toUpperCase() + ch.category.slice(1)) + '</span>\n';
         html += '                        </a>\n';
     }
     
