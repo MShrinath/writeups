@@ -529,8 +529,6 @@ function generateHTML(ctf, challenges, sourceData) {
     html += '    <link rel="stylesheet" href="/assets/css/base.css">\n';
     html += '    <link rel="stylesheet" href="/assets/css/writeup.css">\n';
     html += '    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">\n';
-    html += '    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">\n';
-    html += '    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"><\/script>\n';
     html += '    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer><\/script>\n';
     html += '    <script src="/assets/js/base.js" defer><\/script>\n';
     html += '    <script src="/assets/js/writeup.js" defer><\/script>\n';
@@ -559,7 +557,6 @@ function generateHTML(ctf, challenges, sourceData) {
     html += '    </main>\n\n';
     
     html += generateFooter();
-    html += generateScripts();
     if (sourceData) {
         html += '    <script type="application/json" id="writeup-source">' + JSON.stringify(sourceData) + '<\/script>\n';
     }
@@ -786,34 +783,6 @@ function generateFooter() {
     html += '            </div>\n';
     html += '        </div>\n';
     html += '    </footer>\n\n';
-    
-    return html;
-}
-
-function generateScripts() {
-    let html = '';
-    
-    html += '    <script>\n';
-    html += '        hljs.highlightAll();\n\n';
-    
-    html += '        function copyCode(btn) {\n';
-    html += '            const codeBlock = btn.closest(\'.code-block\').querySelector(\'code\');\n';
-    html += '            navigator.clipboard.writeText(codeBlock.textContent);\n';
-    html += '            btn.innerHTML = \'<i class="fas fa-check"></i> Copied!\';\n';
-    html += '            setTimeout(() => {\n';
-    html += '                btn.innerHTML = \'<i class="fas fa-copy"></i> Copy\';\n';
-    html += '            }, 2000);\n';
-    html += '        }\n\n';
-    
-    html += '        function copyFlag(btn) {\n';
-    html += '            const flagText = btn.previousElementSibling.textContent;\n';
-    html += '            navigator.clipboard.writeText(flagText);\n';
-    html += '            btn.innerHTML = \'<i class="fas fa-check"></i>\';\n';
-    html += '            setTimeout(() => {\n';
-    html += '                btn.innerHTML = \'<i class="fas fa-copy"></i>\';\n';
-    html += '            }, 2000);\n';
-    html += '        }\n';
-    html += '    <\/script>\n';
     
     return html;
 }

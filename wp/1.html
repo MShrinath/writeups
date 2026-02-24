@@ -307,27 +307,5 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        hljs.highlightAll();
-
-        function copyCode(btn) {
-            const codeBlock = btn.closest('.code-block').querySelector('code');
-            navigator.clipboard.writeText(codeBlock.textContent);
-            btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
-            }, 2000);
-        }
-
-        function copyFlag(btn) {
-            const flagText = btn.previousElementSibling.textContent;
-            navigator.clipboard.writeText(flagText);
-            btn.innerHTML = '<i class="fas fa-check"></i>';
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fas fa-copy"></i>';
-            }, 2000);
-        }
-    </script>
 </body>
 </html>

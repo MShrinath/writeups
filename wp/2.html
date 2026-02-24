@@ -442,30 +442,5 @@ for i in range(26):
             </div>
         </div>
     </footer>
-
-    <script>
-        // Initialize syntax highlighting
-        hljs.highlightAll();
-
-        // Copy code functionality
-        function copyCode(btn) {
-            const codeBlock = btn.closest('.code-block').querySelector('code');
-            navigator.clipboard.writeText(codeBlock.textContent);
-            btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
-            }, 2000);
-        }
-
-        // Copy flag functionality
-        function copyFlag(btn) {
-            const flagText = btn.previousElementSibling.textContent;
-            navigator.clipboard.writeText(flagText);
-            btn.innerHTML = '<i class="fas fa-check"></i>';
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fas fa-copy"></i>';
-            }, 2000);
-        }
-    </script>
 </body>
 </html>
