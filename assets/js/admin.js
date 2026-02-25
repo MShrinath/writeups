@@ -497,7 +497,7 @@ function generateWriteup() {
             }
         });
 
-        if (challenge.name && challenge.description && challenge.flag) {
+        if (challenge.name) {
             challenges.push(challenge);
         }
     });
@@ -527,11 +527,10 @@ function generateWriteup() {
     navigator.clipboard.writeText(generatedHTML).then(() => {
         const msg = document.getElementById('successMessage');
         msg.style.display = 'block';
+        msg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         setTimeout(() => {
             msg.style.display = 'none';
         }, 5000);
-        
-        window.scrollTo({top: 0, behavior: 'smooth'});
     });
 }
 
