@@ -574,7 +574,6 @@ function generateHTML(ctf, challenges, sourceData) {
     html += '    <main>\n';
     html += generateHeaderSection(ctf, challenges);
     html += generateChallengesSection(challenges);
-    html += generateNavigationSection();
     html += '    </main>\n\n';
     
     html += generateFooter();
@@ -771,21 +770,6 @@ function generateChallenge(ch, num) {
     html += '                        </div>\n';
     html += '                    </div>\n';
     html += '                </div>\n\n';
-    
-    return html;
-}
-
-function generateNavigationSection() {
-    let html = '';
-    
-    html += '        <section class="writeup-navigation">\n';
-    html += '            <div class="container">\n';
-    html += '                <a href="/" class="nav-btn">\n';
-    html += '                    <i class="fas fa-arrow-left"></i>\n';
-    html += '                    Back to All CTFs\n';
-    html += '                </a>\n';
-    html += '            </div>\n';
-    html += '        </section>\n';
     
     return html;
 }
