@@ -28,35 +28,35 @@ function addChallenge() {
                     <label>Challenge Name *</label>
                     <input type="text" id="ch${challengeCount}-name" placeholder="e.g., Web Gauntlet">
                 </div>
-
-                <div class="form-group">
-                    <label>Category *</label>
-                    <select id="ch${challengeCount}-category" onchange="toggleCustomCategory(${challengeCount})">
-                        <option value="welcome">Welcome</option>
-                        <option value="web">Web</option>
-                        <option value="crypto">Crypto</option>
-                        <option value="forensics">Forensics</option>
-                        <option value="reverse">Reverse</option>
-                        <option value="pwn">PWN</option>
-                        <option value="osint">OSINT</option>
-                        <option value="steganography">Steganography</option>
-                        <option value="misc">Misc</option>
-                        <option value="network">Network</option>
-                        <option value="malware">Malware</option>
-                        <option value="hardware">Hardware</option>
-                        <option value="blockchain">Blockchain</option>
-                        <option value="mobile">Mobile</option>
-                        <option value="programming">Programming</option>
-                        <option value="trivia">Trivia</option>
-                        <option value="others">Others</option>
-                    </select>
-                    <input type="text" id="ch${challengeCount}-custom-category" placeholder="Enter custom category" style="display: none; margin-top: 10px;">
-                </div>
-
                 <div class="form-group">
                     <label>Points</label>
                     <input type="number" id="ch${challengeCount}-points" placeholder="100">
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label>Category *</label>
+                <div class="category-picker" id="ch${challengeCount}-category-picker">
+                    <button type="button" class="cat-pill" data-value="welcome" onclick="selectCategory(${challengeCount}, 'welcome')">Welcome</button>
+                    <button type="button" class="cat-pill active" data-value="web" onclick="selectCategory(${challengeCount}, 'web')">Web</button>
+                    <button type="button" class="cat-pill" data-value="crypto" onclick="selectCategory(${challengeCount}, 'crypto')">Crypto</button>
+                    <button type="button" class="cat-pill" data-value="forensics" onclick="selectCategory(${challengeCount}, 'forensics')">Forensics</button>
+                    <button type="button" class="cat-pill" data-value="reverse" onclick="selectCategory(${challengeCount}, 'reverse')">Reverse</button>
+                    <button type="button" class="cat-pill" data-value="pwn" onclick="selectCategory(${challengeCount}, 'pwn')">PWN</button>
+                    <button type="button" class="cat-pill" data-value="osint" onclick="selectCategory(${challengeCount}, 'osint')">OSINT</button>
+                    <button type="button" class="cat-pill" data-value="steganography" onclick="selectCategory(${challengeCount}, 'steganography')">Steganography</button>
+                    <button type="button" class="cat-pill" data-value="misc" onclick="selectCategory(${challengeCount}, 'misc')">Misc</button>
+                    <button type="button" class="cat-pill" data-value="network" onclick="selectCategory(${challengeCount}, 'network')">Network</button>
+                    <button type="button" class="cat-pill" data-value="malware" onclick="selectCategory(${challengeCount}, 'malware')">Malware</button>
+                    <button type="button" class="cat-pill" data-value="hardware" onclick="selectCategory(${challengeCount}, 'hardware')">Hardware</button>
+                    <button type="button" class="cat-pill" data-value="blockchain" onclick="selectCategory(${challengeCount}, 'blockchain')">Blockchain</button>
+                    <button type="button" class="cat-pill" data-value="mobile" onclick="selectCategory(${challengeCount}, 'mobile')">Mobile</button>
+                    <button type="button" class="cat-pill" data-value="programming" onclick="selectCategory(${challengeCount}, 'programming')">Programming</button>
+                    <button type="button" class="cat-pill" data-value="trivia" onclick="selectCategory(${challengeCount}, 'trivia')">Trivia</button>
+                    <button type="button" class="cat-pill" data-value="others" onclick="selectCategory(${challengeCount}, 'others')">Others +</button>
+                </div>
+                <input type="hidden" id="ch${challengeCount}-category" value="web">
+                <input type="text" id="ch${challengeCount}-custom-category" placeholder="Enter custom category" style="display: none; margin-top: 10px;">
             </div>
 
             <div class="form-group">
@@ -215,12 +215,18 @@ function toggleCollapse(id) {
     }
 }
 
-function toggleCustomCategory(challengeId) {
-    const select = document.getElementById(`ch${challengeId}-category`);
+function selectCategory(challengeId, value) {
+    document.getElementById(`ch${challengeId}-category`).value = value;
+
+    const picker = document.getElementById(`ch${challengeId}-category-picker`);
+    picker.querySelectorAll('.cat-pill').forEach(pill => {
+        pill.classList.toggle('active', pill.dataset.value === value);
+    });
+
     const customInput = document.getElementById(`ch${challengeId}-custom-category`);
-    
-    if (select.value === 'others') {
+    if (value === 'others') {
         customInput.style.display = 'block';
+        customInput.focus();
     } else {
         customInput.style.display = 'none';
         customInput.value = '';
@@ -1084,7 +1090,7 @@ function populateFromData(data) {
     document.getElementById('ctfTeamName').style.display = teamVal === 'team' ? 'block' : 'none';
     document.getElementById('ctfOverview').value = ctf.overview || '';
 
-    const knownCats = ['web','crypto','forensics','reverse','pwn','osint','steganography','misc','network','malware','hardware','blockchain','mobile','programming','trivia','others'];
+    const knownCats = ['welcome','web','crypto','forensics','reverse','pwn','osint','steganography','misc','network','malware','hardware','blockchain','mobile','programming','trivia','others'];
 
     (data.challenges || []).forEach(ch => {
         addChallenge();
@@ -1093,13 +1099,11 @@ function populateFromData(data) {
         document.getElementById(`ch${id}-name`).value = ch.name || '';
 
         const catLower = (ch.category || '').toLowerCase();
-        const catSelect = document.getElementById(`ch${id}-category`);
         if (knownCats.includes(catLower)) {
-            catSelect.value = catLower;
+            selectCategory(id, catLower);
         } else {
-            catSelect.value = 'others';
+            selectCategory(id, 'others');
             document.getElementById(`ch${id}-custom-category`).value = ch.category || '';
-            document.getElementById(`ch${id}-custom-category`).style.display = 'block';
         }
 
         document.getElementById(`ch${id}-points`).value = ch.points || '';

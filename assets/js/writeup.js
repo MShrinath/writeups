@@ -139,22 +139,12 @@ function initScrollAnimations() {
 }
 
 /* ===========================
-   SYNTAX HIGHLIGHTING
-=========================== */
-function initSyntaxHighlighting() {
-    if (typeof hljs !== 'undefined') {
-        hljs.highlightAll();
-    }
-}
-
-/* ===========================
    INITIALIZATION
 =========================== */
 function initWriteup() {
     initSmoothScroll();
     initTOCHighlight();
     initScrollAnimations();
-    initSyntaxHighlighting();
 }
 
 if (document.readyState === 'loading') {
