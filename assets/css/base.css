@@ -30,6 +30,13 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
 }
 
 #particles-js {
@@ -78,8 +85,7 @@ a {
     HEADER
 =========================== */
 .main-header {
-    background: rgba(10, 25, 47, 0.9);
-    backdrop-filter: blur(10px);
+    background: var(--bg-dark);
     padding: 12px 0;
     position: sticky;
     top: 0;
