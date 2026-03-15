@@ -157,7 +157,7 @@ Opened the browser developer console (F12) to inspect scripts and logs.
 And there it was, printed in the console.
 </p>
                         <div class="image-wrapper">
-                            <img src="t11" alt="" class="screenshot">
+                            <img src="/assets/img/2/t11.png" alt="" class="screenshot">
                         </div>
                     </div>
 
@@ -205,7 +205,7 @@ This hinted that the content might be hidden but still accessible somehow.
 Opened /robots.txt and found the flag waiting there.
 </p>
                         <div class="image-wrapper">
-                            <img src="t12" alt="" class="screenshot">
+                            <img src="/assets/img/2/t12.png" alt="" class="screenshot">
                         </div>
                     </div>
 
@@ -255,7 +255,7 @@ Noticed a /secret-search path which led to a Database Query Interface.
 Successfully used 1 OR 1=1 and retrieved the contents of the ledger, which contained the flag.
 </p>
                         <div class="image-wrapper">
-                            <img src="t13" alt="" class="screenshot">
+                            <img src="/assets/img/2/t13.png" alt="" class="screenshot">
                         </div>
                     </div>
 
@@ -315,7 +315,7 @@ Checked the dashboard, found a reviews page where diners could submit input.
 The page revealed the flag in the process.
 </p>
                         <div class="image-wrapper">
-                            <img src="t14" alt="" class="screenshot">
+                            <img src="/assets/img/2/t14.png" alt="" class="screenshot">
                         </div>
                     </div>
 
@@ -364,7 +364,7 @@ Opened the network tab and saw an API call:
 /api/users
 Returning a JSON of all users, their IDs, and admin status — exactly the information the story hinted we could uncover.</p>
                         <div class="image-wrapper">
-                            <img src="t511" alt="" class="screenshot">
+                            <img src="/assets/img/2/t15_1.png" alt="" class="screenshot">
                         </div>
                         <h4>Accessing the Ledger</h4>
                         <p>From the JS source code, found an endpoint:
@@ -375,7 +375,7 @@ Tried the IDs from /api/users after encoding them, and the API returned the corr
                         <p>Among the returned user data there was the flag, completing the final piece of the Chef’s secret book.
 </p>
                         <div class="image-wrapper">
-                            <img src="t512" alt="" class="screenshot">
+                            <img src="/assets/img/2/t15_2.png" alt="" class="screenshot">
                         </div>
                     </div>
 
@@ -420,7 +420,7 @@ Examined the columns and rows to understand the types of events recorded.</p>
                         <p>Filtered the event_type column for file_create events.
 Noticed multiple files being created with the .wncry extension.</p>
                         <div class="image-wrapper">
-                            <img src="t2" alt="" class="screenshot">
+                            <img src="/assets/img/2/t2.png" alt="" class="screenshot">
                         </div>
                         <h4>Connecting the Dots</h4>
                         <p>.wncry is a known indicator of WannaCry ransomware.
@@ -472,13 +472,13 @@ mustache.webstory.sa
 
 The traffic showed requests to /wp-admin, which looked suspicious.</p>
                         <div class="image-wrapper">
-                            <img src="31" alt="" class="screenshot">
+                            <img src="/assets/img/2/t3_1.png" alt="" class="screenshot">
                         </div>
                         <h4>Domain Investigation</h4>
                         <p>Tried to access the domain in a browser, but it was inactive.
 Performed an open-source search for mustache.webstory.sa.</p>
                         <div class="image-wrapper">
-                            <img src="32" alt="" class="screenshot">
+                            <img src="/assets/img/2/t3_2.png" alt="" class="screenshot">
                         </div>
                         <h4>Threat Intelligence Correlation</h4>
                         <p>Found threat intel reports and documentaries linking this domain to Emotet malware campaigns.
@@ -513,7 +513,5 @@ Concluded that the activity in the PCAP was related to the Emotet threat actor.<
             </div>
         </div>
     </footer>
-
-    <script type="application/json" id="writeup-source">{"ctf":{"name":"THMHxSFDC SEPT CTF","month":"September","year":"2025","total_challenges":"7","rank":"1","team":"solo","teamName":"","overview":"OLDCTF"},"challenges":[{"name":"Kitchen Note","category":"web","points":"20","description":"While setting up the online restaurant portal, the Chef left behind a note tucked away in the system logs. It was just a half-written reminder about an old pantry folder, never meant for diners to notice. Anyone curious enough to peek might find the first clue hidden there.","files":["https://meher-ctf.onrender.com"],"flag":"THMxSFDC{r3g1str4t10n_fl4g_f0und}","solution":[{"type":"heading","content":"Accessing the Target Site"},{"type":"text","content":"Opened the Target site.\nLanded on a login page, but no credentials were provided."},{"type":"heading","content":"Creating a New Account"},{"type":"text","content":"Clicked the Sign Up option to register a new account.\nFilled in the required details and successfully created an account.\n"},{"type":"heading","content":"Inspecting the Page"},{"type":"text","content":"Logged in with the newly created account.\nOpened the browser developer console (F12) to inspect scripts and logs.\nAnd there it was, printed in the console.\n"},{"type":"image","imageType":"single","path":"t11","caption":""}]},{"name":"Forbidden Pantry","category":"web","points":"20","description":"The janitor once stumbled across the Chef’s private recipe book while navigating the staff portal. Not knowing its value, he marked the folder as restricted in the system’s back-end. That careless note still lingers, quietly hinting toward a forgotten archive.\n\n","files":["https://meher-ctf.onrender.com/"],"flag":"THMxSFDC{r0b0ts_t3ll_s3cr3ts}","solution":[{"type":"heading","content":"Understanding the Story Clues"},{"type":"text","content":"The story mentioned a “restricted folder” and a forgotten archive.\nThis hinted that the content might be hidden but still accessible somehow.\n"},{"type":"heading","content":"Checking Site Metadata"},{"type":"text","content":"Remembered that some hidden paths are often listed in robots.txt.\nOpened /robots.txt and found the flag waiting there.\n"},{"type":"image","imageType":"single","path":"t12","caption":""}]},{"name":"Archivist’s Ledger","category":"web","points":"30","description":"Buried deep within the portal is the Archivist’s ledger, a digital record of recipes and notes that staff thought were long forgotten. It was meant only for the Chef and his closest aides. Yet the ledger is not guarded carefully. With the right kind of request, it reveals more than it should, including another fragment of the Chef’s secret book.","files":["https://meher-ctf.onrender.com/"],"flag":"THMxSFDC{sql_1nj3ct10n_m4st3r}","solution":[{"type":"heading","content":"Observing the Story Clues"},{"type":"text","content":"The story mentions a portal that holds the Archivist’s ledger.\nThis hinted at a hidden interface or section in the site.\n"},{"type":"heading","content":"Exploring Known Paths"},{"type":"text","content":"As seen in the previous subtask, the robots.txt file listed hidden paths.\nNoticed a /secret-search path which led to a Database Query Interface.\n"},{"type":"heading","content":"Testing for SQL Injection"},{"type":"text","content":"Tried basic SQL injection payloads to see if queries could be manipulated.\nSuccessfully used 1 OR 1=1 and retrieved the contents of the ledger, which contained the flag.\n"},{"type":"image","imageType":"single","path":"t13","caption":""}]},{"name":"Reflections of the Crowd","category":"web","points":"20","description":"Secrets do not always hide in logs and ledgers. Sometimes they slip through the voices of customers. The portal proudly echoes whatever is spoken, yet it does so without care. Clever diners have noticed that when reflections are repeated without question, even a casual remark can twist into something dangerous. In that distortion, another secret of Chef’s book is exposed.\n\n","files":["https://meher-ctf.onrender.com/"],"flag":"THMxSFDC{xss_c0mm3nt_h4ck}","solution":[{"type":"heading","content":"Following the Story Clues"},{"type":"text","content":"The story talks about the “voice of customers” and echoes, hinting at user-submitted content.\nChecked the dashboard, found a reviews page where diners could submit input.\n"},{"type":"heading","content":"Testing for XSS"},{"type":"text","content":"The input was not sanitized, so tried a simple XSS payload:\n"},{"type":"code","language":"javascript","content":"<script>alert(1)</script>\n"},{"type":"text","content":"It successfully executed, confirming a Reflected XSS vulnerability.\nThe page revealed the flag in the process.\n"},{"type":"image","imageType":"single","path":"t14","caption":""}]},{"name":"The Hidden Pantry Ledger","category":"web","points":"50","description":"Behind the scenes of the portal lies a private ledger, a section meant only for trusted staff accounts. The locks on its digital shelves are weaker than they appear. A determined user who tampers with the right identifier can bypass the restriction and stumble upon records that were never meant for their eyes. Hidden among them lies yet another piece of the Chef’s secret book.\n\n","files":["https://meher-ctf.onrender.com/"],"flag":"THMxSFDC{1d0r_4dm1n_4cc3ss}","solution":[{"type":"heading","content":"Following the Story Clues"},{"type":"text","content":"The story mentioned a “private ledger” for trusted staff accounts, hinting at an admin-only section.\nChecked robots.txt and noticed a /admin path, likely where the private records are hidden.\n"},{"type":"heading","content":"Exploring the Admin Panel"},{"type":"text","content":"Navigated to /admin and found a panel listing all users.\nOpened the network tab and saw an API call:\n/api/users\nReturning a JSON of all users, their IDs, and admin status — exactly the information the story hinted we could uncover."},{"type":"image","imageType":"single","path":"t511","caption":""},{"type":"heading","content":"Accessing the Ledger"},{"type":"text","content":"From the JS source code, found an endpoint:\n/api/user/profile/{id}\nEach ID needed to be Base64 encoded.\nTried the IDs from /api/users after encoding them, and the API returned the corresponding user details."},{"type":"heading","content":"Finding the Flag"},{"type":"text","content":"Among the returned user data there was the flag, completing the final piece of the Chef’s secret book.\n"},{"type":"image","imageType":"single","path":"t512","caption":""}]},{"name":"Hospital Outbreak","category":"CTI","points":"50","description":"Analyse the logs (.csv) and answer the question.\n\nWhich threat actor was responsible for this incident?\n\n","files":[],"flag":"lazarus","solution":[{"type":"heading","content":"Initial Exploration"},{"type":"text","content":"Opened the CSV in a spreadsheet editor.\nExamined the columns and rows to understand the types of events recorded."},{"type":"heading","content":"Focusing on Suspicious Events"},{"type":"text","content":"Filtered the event_type column for file_create events.\nNoticed multiple files being created with the .wncry extension."},{"type":"image","imageType":"single","path":"t2","caption":""},{"type":"heading","content":"Connecting the Dots"},{"type":"text","content":".wncry is a known indicator of WannaCry ransomware.\nQuick research confirmed that WannaCry is attributed to the threat actor Lazarus."}]},{"name":"Silent Fetch","category":"CTI","points":"50","description":"Analyse the (.pcap) and answer the question.\n\nWhich threat actor was responsible for the activity observed in the provided PCAP?\n\n\n","files":[],"flag":"emotet","solution":[{"type":"heading","content":"Initial Exploration"},{"type":"text","content":"Opened the PCAP file in Wireshark.\nBrowsed through HTTP and DNS traffic to identify unusual requests."},{"type":"heading","content":"Identifying Suspicious Traffic"},{"type":"text","content":"Found repeated attempts to access a domain:\n\nmustache.webstory.sa\n\nThe traffic showed requests to /wp-admin, which looked suspicious."},{"type":"image","imageType":"single","path":"31","caption":""},{"type":"heading","content":"Domain Investigation"},{"type":"text","content":"Tried to access the domain in a browser, but it was inactive.\nPerformed an open-source search for mustache.webstory.sa."},{"type":"image","imageType":"single","path":"32","caption":""},{"type":"heading","content":"Threat Intelligence Correlation"},{"type":"text","content":"Found threat intel reports and documentaries linking this domain to Emotet malware campaigns.\nConcluded that the activity in the PCAP was related to the Emotet threat actor."}]}]}</script>
 </body>
 </html>
