@@ -152,9 +152,30 @@
                 </div>
             </div>
 
+            <!-- Tags Pill Picker (mirrors Challenge Category selector) -->
             <div class="form-group">
-                <label for="indexTags">Tags (comma separated)</label>
-                <input type="text" id="indexTags" placeholder="Web, Crypto, Forensics">
+                <label>Tags</label>
+                <div class="category-picker" id="indexTags-picker">
+                    <button type="button" class="cat-pill" data-value="Web" onclick="toggleIndexTag('Web')">Web</button>
+                    <button type="button" class="cat-pill" data-value="Crypto" onclick="toggleIndexTag('Crypto')">Crypto</button>
+                    <button type="button" class="cat-pill" data-value="Forensics" onclick="toggleIndexTag('Forensics')">Forensics</button>
+                    <button type="button" class="cat-pill" data-value="Reverse Engineering" onclick="toggleIndexTag('Reverse Engineering')">Reverse</button>
+                    <button type="button" class="cat-pill" data-value="PWN" onclick="toggleIndexTag('PWN')">PWN</button>
+                    <button type="button" class="cat-pill" data-value="OSINT" onclick="toggleIndexTag('OSINT')">OSINT</button>
+                    <button type="button" class="cat-pill" data-value="Steganography" onclick="toggleIndexTag('Steganography')">Stego</button>
+                    <button type="button" class="cat-pill" data-value="Misc" onclick="toggleIndexTag('Misc')">Misc</button>
+                    <button type="button" class="cat-pill" data-value="Network" onclick="toggleIndexTag('Network')">Network</button>
+                    <button type="button" class="cat-pill" data-value="Malware" onclick="toggleIndexTag('Malware')">Malware</button>
+                    <button type="button" class="cat-pill" data-value="CTI" onclick="toggleIndexTag('CTI')">CTI</button>
+                    <button type="button" class="cat-pill" data-value="Hardware" onclick="toggleIndexTag('Hardware')">Hardware</button>
+                    <button type="button" class="cat-pill" data-value="Programming" onclick="toggleIndexTag('Programming')">Programming</button>
+                    <button type="button" class="cat-pill" data-value="Blockchain" onclick="toggleIndexTag('Blockchain')">Blockchain</button>
+                    <button type="button" class="cat-pill" data-value="Mobile" onclick="toggleIndexTag('Mobile')">Mobile</button>
+                    <button type="button" class="cat-pill" data-value="Trivia" onclick="toggleIndexTag('Trivia')">Trivia</button>
+                    <button type="button" class="cat-pill" data-value="Welcome" onclick="toggleIndexTag('Welcome')">Welcome</button>
+                </div>
+                <!-- Hidden input stores comma-separated selected tags for generateIndexCardCode() to read -->
+                <input type="hidden" id="indexTags" value="">
             </div>
 
             <div class="form-group">

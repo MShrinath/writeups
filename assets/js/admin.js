@@ -1,6 +1,57 @@
 let challengeCount = 0;
 let generatedHTML = '';
 
+/* ===========================
+   IMAGE PATH AUTO-PREFIX
+=========================== */
+function prefixImgPath(input) {
+    const prefix = '/assets/img/';
+    let val = input.value;
+    // Don't touch empty values or absolute URLs
+    if (!val || val.startsWith('http://') || val.startsWith('https://')) return;
+    // Avoid double-prefixing
+    if (val.startsWith(prefix)) return;
+    input.value = prefix + val;
+    // Keep cursor at end
+    const len = input.value.length;
+    try { input.setSelectionRange(len, len); } catch(e) {}
+}
+
+/* ===========================
+   INDEX TAGS PILL PICKER
+=========================== */
+const _indexSelectedTags = new Set();
+
+function toggleIndexTag(value) {
+    if (_indexSelectedTags.has(value)) {
+        _indexSelectedTags.delete(value);
+    } else {
+        _indexSelectedTags.add(value);
+    }
+    // Sync hidden input
+    document.getElementById('indexTags').value = [..._indexSelectedTags].join(', ');
+    // Update pill active states
+    document.querySelectorAll('#indexTags-picker .cat-pill').forEach(pill => {
+        pill.classList.toggle('active', _indexSelectedTags.has(pill.dataset.value));
+    });
+}
+
+function setIndexTags(tagsArray) {
+    _indexSelectedTags.clear();
+    document.querySelectorAll('#indexTags-picker .cat-pill').forEach(pill => pill.classList.remove('active'));
+    tagsArray.forEach(tag => {
+        const trimmed = tag.trim();
+        if (!trimmed) return;
+        _indexSelectedTags.add(trimmed);
+        const pill = document.querySelector(`#indexTags-picker .cat-pill[data-value="${trimmed}"]`);
+        if (pill) pill.classList.add('active');
+    });
+    document.getElementById('indexTags').value = [..._indexSelectedTags].join(', ');
+}
+
+/* ===========================
+   ADD CHALLENGE
+=========================== */
 function addChallenge() {
     challengeCount++;
     const container = document.getElementById('challengesContainer');
@@ -72,7 +123,7 @@ function addChallenge() {
             <div class="form-group">
                 <label>Solution Steps</label>
                 <div id="ch${challengeCount}-steps"></div>
-                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
                     <button class="btn btn-secondary" onclick="addStep(${challengeCount}, 'text')">
                         <i class="fas fa-paragraph"></i> Add Text
                     </button>
@@ -107,6 +158,9 @@ function addChallenge() {
 
 let stepCounters = {};
 
+/* ===========================
+   ADD STEP
+=========================== */
 function addStep(challengeId, type) {
     if (!stepCounters[challengeId]) stepCounters[challengeId] = 0;
     stepCounters[challengeId]++;
@@ -168,7 +222,7 @@ function addStep(challengeId, type) {
             </select>
             <div class="image-inputs-container">
                 <label>Image Path</label>
-                <input type="text" class="step-data" data-type="image" placeholder="images/screenshot.png">
+                <input type="text" class="step-data" data-type="image" placeholder="screenshot.png" oninput="prefixImgPath(this)">
                 <label style="margin-top: 10px;">Caption (optional)</label>
                 <input type="text" class="step-caption" placeholder="Screenshot description">
             </div>
@@ -194,6 +248,9 @@ function addStep(challengeId, type) {
     }
 }
 
+/* ===========================
+   REMOVE CHALLENGE
+=========================== */
 function removeChallenge(id) {
     const challenge = document.getElementById(`challenge-${id}`);
     if (challenge) {
@@ -201,6 +258,9 @@ function removeChallenge(id) {
     }
 }
 
+/* ===========================
+   COLLAPSE
+=========================== */
 function expandCollapse(el) {
     el.style.maxHeight = el.scrollHeight + 'px';
 }
@@ -215,6 +275,9 @@ function toggleCollapse(id) {
     }
 }
 
+/* ===========================
+   SELECT CATEGORY (challenges)
+=========================== */
 function selectCategory(challengeId, value) {
     document.getElementById(`ch${challengeId}-category`).value = value;
 
@@ -233,6 +296,9 @@ function selectCategory(challengeId, value) {
     }
 }
 
+/* ===========================
+   TEAM TOGGLES
+=========================== */
 function toggleTeamNameInput() {
     const select = document.getElementById('ctfTeam');
     const teamNameInput = document.getElementById('ctfTeamName');
@@ -247,6 +313,9 @@ function toggleIndexTeamNameInput() {
     if (select.value === 'solo') teamNameInput.value = '';
 }
 
+/* ===========================
+   IMAGE INPUT UPDATES
+=========================== */
 function updateImageInputs(challengeId, stepId) {
     const stepDiv = document.getElementById(`ch${challengeId}-step${stepId}`);
     const imageType = stepDiv.querySelector('.step-image-type').value;
@@ -257,14 +326,14 @@ function updateImageInputs(challengeId, stepId) {
     if (imageType === 'single') {
         html = `
             <label>Image Path</label>
-            <input type="text" class="step-data" data-type="image" placeholder="images/screenshot.png">
+            <input type="text" class="step-data" data-type="image" placeholder="screenshot.png" oninput="prefixImgPath(this)">
             <label style="margin-top: 10px;">Caption (optional)</label>
             <input type="text" class="step-caption" placeholder="Screenshot description">
         `;
     } else if (imageType === 'terminal') {
         html = `
             <label>Terminal Screenshot Path</label>
-            <input type="text" class="step-data" data-type="image" data-subtype="terminal" placeholder="images/terminal.png">
+            <input type="text" class="step-data" data-type="image" data-subtype="terminal" placeholder="terminal.png" oninput="prefixImgPath(this)">
         `;
     } else if (imageType === 'grid') {
         html = `
@@ -272,9 +341,9 @@ function updateImageInputs(challengeId, stepId) {
             <input type="number" class="grid-count" value="2" min="2" max="4" onchange="updateGridInputs(${challengeId}, ${stepId})" style="margin-bottom: 10px;">
             <div class="grid-images-container">
                 <label>Image 1 Path</label>
-                <input type="text" class="grid-image" data-index="0" placeholder="images/img1.png" style="margin-bottom: 10px;">
+                <input type="text" class="grid-image" data-index="0" placeholder="img1.png" style="margin-bottom: 10px;" oninput="prefixImgPath(this)">
                 <label>Image 2 Path</label>
-                <input type="text" class="grid-image" data-index="1" placeholder="images/img2.png">
+                <input type="text" class="grid-image" data-index="1" placeholder="img2.png" oninput="prefixImgPath(this)">
             </div>
         `;
     }
@@ -291,19 +360,25 @@ function updateGridInputs(challengeId, stepId) {
     for (let i = 0; i < count; i++) {
         html += `
             <label>Image ${i + 1} Path</label>
-            <input type="text" class="grid-image" data-index="${i}" placeholder="images/img${i + 1}.png" style="margin-bottom: ${i < count - 1 ? '10px' : '0'};">
+            <input type="text" class="grid-image" data-index="${i}" placeholder="img${i + 1}.png" style="margin-bottom: ${i < count - 1 ? '10px' : '0'};" oninput="prefixImgPath(this)">
         `;
     }
     
     gridContainer.innerHTML = html;
 }
 
+/* ===========================
+   ESCAPE HTML
+=========================== */
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
 
+/* ===========================
+   GENERATE INDEX CARD (populate form)
+=========================== */
 function generateIndexCard() {
     const ctfName = document.getElementById('ctfName').value;
     const ctfMonth = document.getElementById('ctfMonth').value;
@@ -325,20 +400,44 @@ function generateIndexCard() {
     document.getElementById('indexTeamName').style.display = ctfTeam === 'team' ? 'block' : 'none';
     document.getElementById('indexDescription').value = ctfOverview;
     document.getElementById('indexFilename').value = ctfName.toLowerCase().replace(/\s+/g, '_') + '_writeup.html';
-    
+
+    // Auto-select tags from challenge categories
+    const usedCats = new Set();
+    const catToTag = {
+        welcome: 'Welcome', web: 'Web', crypto: 'Crypto', forensics: 'Forensics',
+        reverse: 'Reverse Engineering', pwn: 'PWN', osint: 'OSINT',
+        steganography: 'Steganography', misc: 'Misc', network: 'Network',
+        malware: 'Malware', hardware: 'Hardware', blockchain: 'Blockchain',
+        mobile: 'Mobile', programming: 'Programming', trivia: 'Trivia'
+    };
+    document.querySelectorAll('.challenge-item').forEach(elem => {
+        const id = elem.id.split('-')[1];
+        const catEl = document.getElementById(`ch${id}-category`);
+        if (catEl) {
+            const cat = catEl.value;
+            if (cat && cat !== 'others' && catToTag[cat]) {
+                usedCats.add(catToTag[cat]);
+            }
+        }
+    });
+    setIndexTags([...usedCats]);
+
     // Show the index card section
     const section = document.getElementById('indexCardSection');
     section.style.display = 'block';
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+/* ===========================
+   GENERATE INDEX CARD CODE (output HTML)
+=========================== */
 function generateIndexCardCode() {
     const ctfName = document.getElementById('ctfName').value;
     const year = document.getElementById('indexYear').value;
     const month = document.getElementById('indexMonth').value;
     const type = document.getElementById('indexType').value;
     const indexTeamName = document.getElementById('indexTeamName').value.trim();
-    const tags = document.getElementById('indexTags').value;
+    const tagsRaw = document.getElementById('indexTags').value;
     const filename = document.getElementById('indexFilename').value;
     const solvedCount = document.querySelectorAll('.challenge-item').length;
 
@@ -347,7 +446,7 @@ function generateIndexCardCode() {
         return;
     }
 
-    const tagsArray = tags.split(',').map(t => t.trim()).filter(t => t);
+    const tagsArray = tagsRaw.split(',').map(t => t.trim()).filter(t => t);
     if (!tagsArray.length) tagsArray.push('CTF');
 
     const teamIcon = type === 'solo' ? 'fa-user' : 'fa-users';
@@ -395,6 +494,9 @@ ${tagsHTML}                        </div>
     document.getElementById('outputBox').scrollIntoView({ behavior: 'smooth' });
 }
 
+/* ===========================
+   COPY OUTPUT
+=========================== */
 function copyOutput() {
     const text = document.getElementById('outputText').textContent;
     navigator.clipboard.writeText(text).then(() => {
@@ -402,6 +504,9 @@ function copyOutput() {
     });
 }
 
+/* ===========================
+   GENERATE WRITEUP HTML
+=========================== */
 function generateWriteup() {
     // Get CTF info
     const ctfMonth = document.getElementById('ctfMonth').value;
@@ -542,10 +647,12 @@ function generateWriteup() {
     });
 }
 
+/* ===========================
+   HTML GENERATION
+=========================== */
 function generateHTML(ctf, challenges, sourceData) {
     let html = '';
     
-    // Start building HTML
     html += '<!DOCTYPE html>\n';
     html += '<html lang="en">\n';
     html += '<head>\n';
@@ -790,7 +897,7 @@ function generateFooter() {
     html += '                <p>&copy; 2026 mshrinath</p>\n';
     html += '                <div class="footer-links">\n';
     html += '                    <a href="https://github.com/mshrinath" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>\n';
-    html += '                    <span class="separator">•</span>\n';
+    html += '                    <span class="separator">\u2022</span>\n';
     html += '                    <a href="https://linkedin.com/in/mshrinath" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> LinkedIn</a>\n';
     html += '                </div>\n';
     html += '            </div>\n';
@@ -800,6 +907,9 @@ function generateFooter() {
     return html;
 }
 
+/* ===========================
+   DOWNLOAD HTML
+=========================== */
 function downloadHTML() {
     if (!generatedHTML) {
         alert('Generate the writeup first!');
@@ -818,6 +928,9 @@ function downloadHTML() {
     URL.revokeObjectURL(url);
 }
 
+/* ===========================
+   CLEAR ALL
+=========================== */
 function clearAll() {
     if (confirm('Are you sure? This will clear all data!')) {
         document.getElementById('ctfName').value = '';
@@ -834,8 +947,9 @@ function clearAll() {
     }
 }
 
-// ─── Save / Load / Import ────────────────────────────────────────────────────
-
+/* ===========================
+   SAVE / LOAD / IMPORT
+=========================== */
 function collectProjectData() {
     const ctfMonth = document.getElementById('ctfMonth').value;
     const ctfYear = document.getElementById('ctfYear').value;
@@ -1026,7 +1140,6 @@ function parseHTMLToData(htmlText) {
         ch.description = descP ? descP.textContent.trim() : '';
 
         div.querySelectorAll('.file-tag').forEach(tag => {
-            // Strip leading icon text (FontAwesome inserts no text, but just in case)
             const text = tag.textContent.trim();
             if (text) ch.files.push(text);
         });
@@ -1158,7 +1271,9 @@ function populateFromData(data) {
     });
 }
 
-// Add first challenge on load
+/* ===========================
+   INITIALIZATION
+=========================== */
 window.onload = () => {
     addChallenge();
 };
