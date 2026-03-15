@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>picoCTF 2024 Writeup | mshrinath</title>
+    <title>THMHxSFDC SEPT CTF Writeup | mshrinath</title>
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
-    <meta name="description" content="Detailed writeup for picoCTF 2024 challenges" />
+    <meta name="description" content="Detailed writeup for THMHxSFDC SEPT CTF challenges" />
     <link rel="stylesheet" href="/assets/css/base.css">
     <link rel="stylesheet" href="/assets/css/writeup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -31,41 +31,40 @@
     </header>
 
     <main>
-        <!-- CTF Overview Section -->
         <section class="writeup-header">
             <div class="container">
                 <div class="breadcrumb">
                     <a href="/">CTF Writeups</a>
                     <i class="fas fa-chevron-right"></i>
-                    <span>picoCTF 2024</span>
+                    <span>THMHxSFDC SEPT CTF</span>
                 </div>
-                
-                <h1 class="glitch-text" data-text="picoCTF 2024">picoCTF 2024</h1>
-                
+
+                <h1 class="glitch-text" data-text="THMHxSFDC SEPT CTF">THMHxSFDC SEPT CTF</h1>
+
                 <div class="writeup-meta-grid">
                     <div class="meta-card">
                         <i class="far fa-calendar"></i>
                         <div class="meta-content">
                             <span class="meta-label">Date</span>
-                            <span class="meta-value">March 12-26, 2024</span>
+                            <span class="meta-value">September 2025</span>
                         </div>
                     </div>
                     <div class="meta-card">
                         <i class="fas fa-flag-checkered"></i>
                         <div class="meta-content">
                             <span class="meta-label">Solved</span>
-                            <span class="meta-value">5 / 100</span>
+                            <span class="meta-value">7 / 7</span>
                         </div>
                     </div>
                     <div class="meta-card">
                         <i class="fas fa-trophy"></i>
                         <div class="meta-content">
                             <span class="meta-label">Rank</span>
-                            <span class="meta-value">#2,345</span>
+                            <span class="meta-value">1</span>
                         </div>
                     </div>
                     <div class="meta-card">
-                        <i class="fas fa-users"></i>
+                        <i class="fas fa-user"></i>
                         <div class="meta-content">
                             <span class="meta-label">Team</span>
                             <span class="meta-value">Solo</span>
@@ -75,115 +74,97 @@
 
                 <div class="overview-box">
                     <h2>Overview</h2>
-                    <p>picoCTF 2024 is a beginner-friendly capture the flag competition designed for high school and college students. The challenges covered a wide range of topics including web exploitation, cryptography, reverse engineering, and forensics. Below are my writeups for the challenges I solved.</p>
+                    <p>OLDCTF</p>
                 </div>
 
-                <!-- Table of Contents -->
                 <div class="toc-box">
                     <h3><i class="fas fa-list"></i> Challenges Solved</h3>
                     <nav class="toc-nav">
                         <a href="#challenge-1" class="toc-item">
                             <span class="toc-number">01</span>
-                            <span class="toc-title">Web Gauntlet</span>
+                            <span class="toc-title">Kitchen Note</span>
                             <span class="toc-category web">Web</span>
                         </a>
                         <a href="#challenge-2" class="toc-item">
                             <span class="toc-number">02</span>
-                            <span class="toc-title">Caesar Cipher</span>
-                            <span class="toc-category crypto">Crypto</span>
+                            <span class="toc-title">Forbidden Pantry</span>
+                            <span class="toc-category web">Web</span>
                         </a>
                         <a href="#challenge-3" class="toc-item">
                             <span class="toc-number">03</span>
-                            <span class="toc-title">Hidden Flag</span>
-                            <span class="toc-category steganography">Steganography</span>
+                            <span class="toc-title">Archivist’s Ledger</span>
+                            <span class="toc-category web">Web</span>
                         </a>
                         <a href="#challenge-4" class="toc-item">
                             <span class="toc-number">04</span>
-                            <span class="toc-title">Social Media Trail</span>
-                            <span class="toc-category osint">OSINT</span>
+                            <span class="toc-title">Reflections of the Crowd</span>
+                            <span class="toc-category web">Web</span>
                         </a>
                         <a href="#challenge-5" class="toc-item">
                             <span class="toc-number">05</span>
-                            <span class="toc-title">Buffer Overflow</span>
-                            <span class="toc-category pwn">PWN</span>
+                            <span class="toc-title">The Hidden Pantry Ledger</span>
+                            <span class="toc-category web">Web</span>
+                        </a>
+                        <a href="#challenge-6" class="toc-item">
+                            <span class="toc-number">06</span>
+                            <span class="toc-title">Hospital Outbreak</span>
+                            <span class="toc-category CTI">CTI</span>
+                        </a>
+                        <a href="#challenge-7" class="toc-item">
+                            <span class="toc-number">07</span>
+                            <span class="toc-title">Silent Fetch</span>
+                            <span class="toc-category CTI">CTI</span>
                         </a>
                     </nav>
                 </div>
             </div>
         </section>
 
-        <!-- Challenge Writeups -->
         <section class="challenges-section">
             <div class="container">
-                
-                <!-- Challenge 1 -->
                 <div id="challenge-1" class="challenge-writeup">
                     <div class="challenge-header">
                         <div class="challenge-number">01</div>
                         <div class="challenge-title-group">
-                            <h2>Web Gauntlet</h2>
+                            <h2>Kitchen Note</h2>
                             <div class="challenge-meta">
-                                <span class="category-badge web">Web Exploitation</span>
-                                <span class="points-badge">100 points</span>
+                                <span class="category-badge web">Web</span>
+                                <span class="points-badge">20 points</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="challenge-description">
                         <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
-                        <p>Can you beat the filters? Log in as admin to get the flag. The website implements multiple SQL injection filters that you need to bypass.</p>
+                        <p>While setting up the online restaurant portal, the Chef left behind a note tucked away in the system logs. It was just a half-written reminder about an old pantry folder, never meant for diners to notice. Anyone curious enough to peek might find the first clue hidden there.</p>
                         <div class="challenge-files">
-                            <span class="file-tag"><i class="fas fa-link"></i> http://challenge.com</span>
+                            <span class="file-tag"><i class="fas fa-link"></i> https://meher-ctf.onrender.com</span>
                         </div>
                     </div>
 
                     <div class="writeup-content">
                         <h3><i class="fas fa-lightbulb"></i> Solution</h3>
-                        
-                        <p>The challenge presents a login form with progressive SQL injection filters. Let's break down the approach:</p>
-
-                        <h4>Step 1: Reconnaissance</h4>
-                        <p>First, I inspected the login form and tested basic SQL injection payloads. The site had filters blocking common keywords like <code>OR</code>, <code>AND</code>, and <code>=</code>.</p>
-
-                        <h4>Step 2: Bypassing Filters</h4>
-                        <p>I used case manipulation and alternative operators to bypass the filters:</p>
-                        
-                        <div class="code-block">
-                            <div class="code-header">
-                                <span class="code-lang">SQL</span>
-                                <button class="copy-btn" onclick="copyCode(this)">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
-                            </div>
-                            <pre><code class="language-sql">admin'/**/OR/**/1/**/LIKE/**/1--</code></pre>
-                        </div>
-
-                        <h4>Step 3: Exploitation</h4>
-                        <p>The payload successfully bypassed all filters by using SQL comments to separate keywords and LIKE operator instead of equals:</p>
-
-                        <div class="code-block">
-                            <div class="code-header">
-                                <span class="code-lang">Payload</span>
-                                <button class="copy-btn" onclick="copyCode(this)">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
-                            </div>
-                            <pre><code class="language-bash">Username: admin'/**/OR/**/1/**/LIKE/**/1--
-Password: anything</code></pre>
-                        </div>
-
-                        <div class="info-box success">
-                            <i class="fas fa-check-circle"></i>
-                            <div>
-                                <strong>Success!</strong> The application returned the flag upon successful login.
-                            </div>
+                        <h4>Accessing the Target Site</h4>
+                        <p>Opened the Target site.
+Landed on a login page, but no credentials were provided.</p>
+                        <h4>Creating a New Account</h4>
+                        <p>Clicked the Sign Up option to register a new account.
+Filled in the required details and successfully created an account.
+</p>
+                        <h4>Inspecting the Page</h4>
+                        <p>Logged in with the newly created account.
+Opened the browser developer console (F12) to inspect scripts and logs.
+And there it was, printed in the console.
+</p>
+                        <div class="image-wrapper">
+                            <img src="t11" alt="" class="screenshot">
                         </div>
                     </div>
 
                     <div class="flag-section">
                         <h3><i class="fas fa-flag"></i> Flag</h3>
                         <div class="flag-box">
-                            <code>picoCTF{sql_1nj3ct10n_m4st3r_abcd1234}</code>
+                            <code>THMxSFDC{r3g1str4t10n_fl4g_f0und}</code>
                             <button class="copy-btn" onclick="copyFlag(this)">
                                 <i class="fas fa-copy"></i>
                             </button>
@@ -191,14 +172,171 @@ Password: anything</code></pre>
                     </div>
                 </div>
 
-                <!-- Challenge 2 -->
                 <div id="challenge-2" class="challenge-writeup">
                     <div class="challenge-header">
                         <div class="challenge-number">02</div>
                         <div class="challenge-title-group">
-                            <h2>Caesar Cipher</h2>
+                            <h2>Forbidden Pantry</h2>
                             <div class="challenge-meta">
-                                <span class="category-badge crypto">Cryptography</span>
+                                <span class="category-badge web">Web</span>
+                                <span class="points-badge">20 points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>The janitor once stumbled across the Chef’s private recipe book while navigating the staff portal. Not knowing its value, he marked the folder as restricted in the system’s back-end. That careless note still lingers, quietly hinting toward a forgotten archive.
+
+</p>
+                        <div class="challenge-files">
+                            <span class="file-tag"><i class="fas fa-link"></i> https://meher-ctf.onrender.com/</span>
+                        </div>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        <h4>Understanding the Story Clues</h4>
+                        <p>The story mentioned a “restricted folder” and a forgotten archive.
+This hinted that the content might be hidden but still accessible somehow.
+</p>
+                        <h4>Checking Site Metadata</h4>
+                        <p>Remembered that some hidden paths are often listed in robots.txt.
+Opened /robots.txt and found the flag waiting there.
+</p>
+                        <div class="image-wrapper">
+                            <img src="t12" alt="" class="screenshot">
+                        </div>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>THMxSFDC{r0b0ts_t3ll_s3cr3ts}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="challenge-3" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">03</div>
+                        <div class="challenge-title-group">
+                            <h2>Archivist’s Ledger</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge web">Web</span>
+                                <span class="points-badge">30 points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>Buried deep within the portal is the Archivist’s ledger, a digital record of recipes and notes that staff thought were long forgotten. It was meant only for the Chef and his closest aides. Yet the ledger is not guarded carefully. With the right kind of request, it reveals more than it should, including another fragment of the Chef’s secret book.</p>
+                        <div class="challenge-files">
+                            <span class="file-tag"><i class="fas fa-link"></i> https://meher-ctf.onrender.com/</span>
+                        </div>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        <h4>Observing the Story Clues</h4>
+                        <p>The story mentions a portal that holds the Archivist’s ledger.
+This hinted at a hidden interface or section in the site.
+</p>
+                        <h4>Exploring Known Paths</h4>
+                        <p>As seen in the previous subtask, the robots.txt file listed hidden paths.
+Noticed a /secret-search path which led to a Database Query Interface.
+</p>
+                        <h4>Testing for SQL Injection</h4>
+                        <p>Tried basic SQL injection payloads to see if queries could be manipulated.
+Successfully used 1 OR 1=1 and retrieved the contents of the ledger, which contained the flag.
+</p>
+                        <div class="image-wrapper">
+                            <img src="t13" alt="" class="screenshot">
+                        </div>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>THMxSFDC{sql_1nj3ct10n_m4st3r}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="challenge-4" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">04</div>
+                        <div class="challenge-title-group">
+                            <h2>Reflections of the Crowd</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge web">Web</span>
+                                <span class="points-badge">20 points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>Secrets do not always hide in logs and ledgers. Sometimes they slip through the voices of customers. The portal proudly echoes whatever is spoken, yet it does so without care. Clever diners have noticed that when reflections are repeated without question, even a casual remark can twist into something dangerous. In that distortion, another secret of Chef’s book is exposed.
+
+</p>
+                        <div class="challenge-files">
+                            <span class="file-tag"><i class="fas fa-link"></i> https://meher-ctf.onrender.com/</span>
+                        </div>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        <h4>Following the Story Clues</h4>
+                        <p>The story talks about the “voice of customers” and echoes, hinting at user-submitted content.
+Checked the dashboard, found a reviews page where diners could submit input.
+</p>
+                        <h4>Testing for XSS</h4>
+                        <p>The input was not sanitized, so tried a simple XSS payload:
+</p>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">Javascript</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                            <pre><code class="language-javascript">&lt;script&gt;alert(1)&lt;/script&gt;
+</code></pre>
+                        </div>
+                        <p>It successfully executed, confirming a Reflected XSS vulnerability.
+The page revealed the flag in the process.
+</p>
+                        <div class="image-wrapper">
+                            <img src="t14" alt="" class="screenshot">
+                        </div>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>THMxSFDC{xss_c0mm3nt_h4ck}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="challenge-5" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">05</div>
+                        <div class="challenge-title-group">
+                            <h2>The Hidden Pantry Ledger</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge web">Web</span>
                                 <span class="points-badge">50 points</span>
                             </div>
                         </div>
@@ -206,147 +344,45 @@ Password: anything</code></pre>
 
                     <div class="challenge-description">
                         <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
-                        <p>Decrypt this message that has been encrypted with a Caesar cipher.</p>
+                        <p>Behind the scenes of the portal lies a private ledger, a section meant only for trusted staff accounts. The locks on its digital shelves are weaker than they appear. A determined user who tampers with the right identifier can bypass the restriction and stumble upon records that were never meant for their eyes. Hidden among them lies yet another piece of the Chef’s secret book.
+
+</p>
                         <div class="challenge-files">
-                            <span class="file-tag"><i class="fas fa-file"></i> encrypted.txt</span>
+                            <span class="file-tag"><i class="fas fa-link"></i> https://meher-ctf.onrender.com/</span>
                         </div>
                     </div>
 
                     <div class="writeup-content">
                         <h3><i class="fas fa-lightbulb"></i> Solution</h3>
-                        
-                        <p>Caesar cipher is a simple substitution cipher where each letter is shifted by a fixed number of positions.</p>
-
-                        <h4>Encrypted Message</h4>
-                        <div class="code-block">
-                            <div class="code-header">
-                                <span class="code-lang">Text</span>
-                                <button class="copy-btn" onclick="copyCode(this)">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
-                            </div>
-                            <pre><code>Uljv lv d whvw phvvdjh iru fdhvdu flskhu</code></pre>
-                        </div>
-
-                        <h4>Decryption Script</h4>
-                        <p>I wrote a Python script to brute force all 26 possible shifts:</p>
-
-                        <div class="code-block">
-                            <div class="code-header">
-                                <span class="code-lang">Python</span>
-                                <button class="copy-btn" onclick="copyCode(this)">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
-                            </div>
-                            <pre><code class="language-python">def caesar_decrypt(text, shift):
-    result = ""
-    for char in text:
-        if char.isalpha():
-            shift_base = ord('A') if char.isupper() else ord('a')
-            result += chr((ord(char) - shift_base - shift) % 26 + shift_base)
-        else:
-            result += char
-    return result
-
-encrypted = "Uljv lv d whvw phvvdjh iru fdhvdu flskhu"
-for i in range(26):
-    print(f"Shift {i}: {caesar_decrypt(encrypted, i)}")</code></pre>
-                        </div>
-
-                        <h4>Result</h4>
-                        <p>After running the script, shift 3 revealed the plaintext message containing the flag.</p>
-                    </div>
-
-                    <div class="flag-section">
-                        <h3><i class="fas fa-flag"></i> Flag</h3>
-                        <div class="flag-box">
-                            <code>picoCTF{cr4ck3d_th3_c0d3_xyz789}</code>
-                            <button class="copy-btn" onclick="copyFlag(this)">
-                                <i class="fas fa-copy"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Challenge 3 - Template with images -->
-                <div id="challenge-3" class="challenge-writeup">
-                    <div class="challenge-header">
-                        <div class="challenge-number">03</div>
-                        <div class="challenge-title-group">
-                            <h2>Hidden Flag</h2>
-                            <div class="challenge-meta">
-                                <span class="category-badge steganography">Steganography</span>
-                                <span class="points-badge">75 points</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="challenge-description">
-                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
-                        <p>Find the hidden flag in this image file. Use your forensics skills!</p>
-                        <div class="challenge-files">
-                            <span class="file-tag"><i class="fas fa-file-image"></i> challenge.png</span>
-                        </div>
-                    </div>
-
-                    <div class="writeup-content">
-                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
-                        
-                        <h4>Step 1: Initial Analysis</h4>
-                        <p>First, I examined the provided image file visually and checked its metadata:</p>
-
-                        <!-- Example: Single image with caption -->
+                        <h4>Following the Story Clues</h4>
+                        <p>The story mentioned a “private ledger” for trusted staff accounts, hinting at an admin-only section.
+Checked robots.txt and noticed a /admin path, likely where the private records are hidden.
+</p>
+                        <h4>Exploring the Admin Panel</h4>
+                        <p>Navigated to /admin and found a panel listing all users.
+Opened the network tab and saw an API call:
+/api/users
+Returning a JSON of all users, their IDs, and admin status — exactly the information the story hinted we could uncover.</p>
                         <div class="image-wrapper">
-                            <img src="path/to/challenge-image.png" alt="Challenge image" class="screenshot">
-                            <div class="image-caption">The original challenge image</div>
+                            <img src="t511" alt="" class="screenshot">
                         </div>
-
-                        <h4>Step 2: Using exiftool</h4>
-                        <p>I used exiftool to check for any hidden metadata:</p>
-
-                        <div class="code-block">
-                            <div class="code-header">
-                                <span class="code-lang">Bash</span>
-                                <button class="copy-btn" onclick="copyCode(this)">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
-                            </div>
-                            <pre><code class="language-bash">exiftool challenge.png</code></pre>
-                        </div>
-
-                        <!-- Example: Terminal screenshot -->
+                        <h4>Accessing the Ledger</h4>
+                        <p>From the JS source code, found an endpoint:
+/api/user/profile/{id}
+Each ID needed to be Base64 encoded.
+Tried the IDs from /api/users after encoding them, and the API returned the corresponding user details.</p>
+                        <h4>Finding the Flag</h4>
+                        <p>Among the returned user data there was the flag, completing the final piece of the Chef’s secret book.
+</p>
                         <div class="image-wrapper">
-                            <img src="path/to/terminal-output.png" alt="Terminal output" class="terminal-screenshot">
-                            <div class="image-caption">Output from exiftool showing suspicious metadata</div>
-                        </div>
-
-                        <h4>Step 3: Steganography Detection</h4>
-                        <p>I used steghide to extract hidden data from the image:</p>
-
-                        <!-- Example: Side-by-side comparison -->
-                        <div class="image-grid">
-                            <div class="image-wrapper">
-                                <img src="path/to/before.png" alt="Before extraction">
-                                <div class="image-caption">Before extraction</div>
-                            </div>
-                            <div class="image-wrapper">
-                                <img src="path/to/after.png" alt="After extraction">
-                                <div class="image-caption">After extraction</div>
-                            </div>
-                        </div>
-
-                        <div class="info-box success">
-                            <i class="fas fa-check-circle"></i>
-                            <div>
-                                <strong>Success!</strong> Found a hidden text file embedded in the image containing the flag.
-                            </div>
+                            <img src="t512" alt="" class="screenshot">
                         </div>
                     </div>
 
                     <div class="flag-section">
                         <h3><i class="fas fa-flag"></i> Flag</h3>
                         <div class="flag-box">
-                            <code>picoCTF{h1dd3n_1n_pl41n_s1ght_abc123}</code>
+                            <code>THMxSFDC{1d0r_4dm1n_4cc3ss}</code>
                             <button class="copy-btn" onclick="copyFlag(this)">
                                 <i class="fas fa-copy"></i>
                             </button>
@@ -354,33 +390,47 @@ for i in range(26):
                     </div>
                 </div>
 
-                <!-- Challenge 4 - OSINT Example -->
-                <div id="challenge-4" class="challenge-writeup">
+                <div id="challenge-6" class="challenge-writeup">
                     <div class="challenge-header">
-                        <div class="challenge-number">04</div>
+                        <div class="challenge-number">06</div>
                         <div class="challenge-title-group">
-                            <h2>Social Media Trail</h2>
+                            <h2>Hospital Outbreak</h2>
                             <div class="challenge-meta">
-                                <span class="category-badge osint">OSINT</span>
-                                <span class="points-badge">100 points</span>
+                                <span class="category-badge CTI">CTI</span>
+                                <span class="points-badge">50 points</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="challenge-description">
                         <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
-                        <p>Track down information about a user across social media platforms to find the flag.</p>
+                        <p>Analyse the logs (.csv) and answer the question.
+
+Which threat actor was responsible for this incident?
+
+</p>
                     </div>
 
                     <div class="writeup-content">
                         <h3><i class="fas fa-lightbulb"></i> Solution</h3>
-                        <p>Add your OSINT writeup here...</p>
+                        <h4>Initial Exploration</h4>
+                        <p>Opened the CSV in a spreadsheet editor.
+Examined the columns and rows to understand the types of events recorded.</p>
+                        <h4>Focusing on Suspicious Events</h4>
+                        <p>Filtered the event_type column for file_create events.
+Noticed multiple files being created with the .wncry extension.</p>
+                        <div class="image-wrapper">
+                            <img src="t2" alt="" class="screenshot">
+                        </div>
+                        <h4>Connecting the Dots</h4>
+                        <p>.wncry is a known indicator of WannaCry ransomware.
+Quick research confirmed that WannaCry is attributed to the threat actor Lazarus.</p>
                     </div>
 
                     <div class="flag-section">
                         <h3><i class="fas fa-flag"></i> Flag</h3>
                         <div class="flag-box">
-                            <code>picoCTF{0s1nt_m4st3r_xyz456}</code>
+                            <code>lazarus</code>
                             <button class="copy-btn" onclick="copyFlag(this)">
                                 <i class="fas fa-copy"></i>
                             </button>
@@ -388,37 +438,57 @@ for i in range(26):
                     </div>
                 </div>
 
-                <!-- Challenge 5 - PWN Example -->
-                <div id="challenge-5" class="challenge-writeup">
+                <div id="challenge-7" class="challenge-writeup">
                     <div class="challenge-header">
-                        <div class="challenge-number">05</div>
+                        <div class="challenge-number">07</div>
                         <div class="challenge-title-group">
-                            <h2>Buffer Overflow</h2>
+                            <h2>Silent Fetch</h2>
                             <div class="challenge-meta">
-                                <span class="category-badge pwn">PWN</span>
-                                <span class="points-badge">150 points</span>
+                                <span class="category-badge CTI">CTI</span>
+                                <span class="points-badge">50 points</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="challenge-description">
                         <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
-                        <p>Exploit a buffer overflow vulnerability to gain shell access.</p>
-                        <div class="challenge-files">
-                            <span class="file-tag"><i class="fas fa-file"></i> vuln_binary</span>
-                            <span class="file-tag"><i class="fas fa-server"></i> nc server.com 1337</span>
-                        </div>
+                        <p>Analyse the (.pcap) and answer the question.
+
+Which threat actor was responsible for the activity observed in the provided PCAP?
+
+
+</p>
                     </div>
 
                     <div class="writeup-content">
                         <h3><i class="fas fa-lightbulb"></i> Solution</h3>
-                        <p>Add your PWN writeup here...</p>
+                        <h4>Initial Exploration</h4>
+                        <p>Opened the PCAP file in Wireshark.
+Browsed through HTTP and DNS traffic to identify unusual requests.</p>
+                        <h4>Identifying Suspicious Traffic</h4>
+                        <p>Found repeated attempts to access a domain:
+
+mustache.webstory.sa
+
+The traffic showed requests to /wp-admin, which looked suspicious.</p>
+                        <div class="image-wrapper">
+                            <img src="31" alt="" class="screenshot">
+                        </div>
+                        <h4>Domain Investigation</h4>
+                        <p>Tried to access the domain in a browser, but it was inactive.
+Performed an open-source search for mustache.webstory.sa.</p>
+                        <div class="image-wrapper">
+                            <img src="32" alt="" class="screenshot">
+                        </div>
+                        <h4>Threat Intelligence Correlation</h4>
+                        <p>Found threat intel reports and documentaries linking this domain to Emotet malware campaigns.
+Concluded that the activity in the PCAP was related to the Emotet threat actor.</p>
                     </div>
 
                     <div class="flag-section">
                         <h3><i class="fas fa-flag"></i> Flag</h3>
                         <div class="flag-box">
-                            <code>picoCTF{pwn3d_th3_st4ck_def789}</code>
+                            <code>emotet</code>
                             <button class="copy-btn" onclick="copyFlag(this)">
                                 <i class="fas fa-copy"></i>
                             </button>
@@ -426,6 +496,7 @@ for i in range(26):
                     </div>
                 </div>
 
+            </div>
         </section>
 
     </main>
@@ -442,5 +513,7 @@ for i in range(26):
             </div>
         </div>
     </footer>
+
+    <script type="application/json" id="writeup-source">{"ctf":{"name":"THMHxSFDC SEPT CTF","month":"September","year":"2025","total_challenges":"7","rank":"1","team":"solo","teamName":"","overview":"OLDCTF"},"challenges":[{"name":"Kitchen Note","category":"web","points":"20","description":"While setting up the online restaurant portal, the Chef left behind a note tucked away in the system logs. It was just a half-written reminder about an old pantry folder, never meant for diners to notice. Anyone curious enough to peek might find the first clue hidden there.","files":["https://meher-ctf.onrender.com"],"flag":"THMxSFDC{r3g1str4t10n_fl4g_f0und}","solution":[{"type":"heading","content":"Accessing the Target Site"},{"type":"text","content":"Opened the Target site.\nLanded on a login page, but no credentials were provided."},{"type":"heading","content":"Creating a New Account"},{"type":"text","content":"Clicked the Sign Up option to register a new account.\nFilled in the required details and successfully created an account.\n"},{"type":"heading","content":"Inspecting the Page"},{"type":"text","content":"Logged in with the newly created account.\nOpened the browser developer console (F12) to inspect scripts and logs.\nAnd there it was, printed in the console.\n"},{"type":"image","imageType":"single","path":"t11","caption":""}]},{"name":"Forbidden Pantry","category":"web","points":"20","description":"The janitor once stumbled across the Chef’s private recipe book while navigating the staff portal. Not knowing its value, he marked the folder as restricted in the system’s back-end. That careless note still lingers, quietly hinting toward a forgotten archive.\n\n","files":["https://meher-ctf.onrender.com/"],"flag":"THMxSFDC{r0b0ts_t3ll_s3cr3ts}","solution":[{"type":"heading","content":"Understanding the Story Clues"},{"type":"text","content":"The story mentioned a “restricted folder” and a forgotten archive.\nThis hinted that the content might be hidden but still accessible somehow.\n"},{"type":"heading","content":"Checking Site Metadata"},{"type":"text","content":"Remembered that some hidden paths are often listed in robots.txt.\nOpened /robots.txt and found the flag waiting there.\n"},{"type":"image","imageType":"single","path":"t12","caption":""}]},{"name":"Archivist’s Ledger","category":"web","points":"30","description":"Buried deep within the portal is the Archivist’s ledger, a digital record of recipes and notes that staff thought were long forgotten. It was meant only for the Chef and his closest aides. Yet the ledger is not guarded carefully. With the right kind of request, it reveals more than it should, including another fragment of the Chef’s secret book.","files":["https://meher-ctf.onrender.com/"],"flag":"THMxSFDC{sql_1nj3ct10n_m4st3r}","solution":[{"type":"heading","content":"Observing the Story Clues"},{"type":"text","content":"The story mentions a portal that holds the Archivist’s ledger.\nThis hinted at a hidden interface or section in the site.\n"},{"type":"heading","content":"Exploring Known Paths"},{"type":"text","content":"As seen in the previous subtask, the robots.txt file listed hidden paths.\nNoticed a /secret-search path which led to a Database Query Interface.\n"},{"type":"heading","content":"Testing for SQL Injection"},{"type":"text","content":"Tried basic SQL injection payloads to see if queries could be manipulated.\nSuccessfully used 1 OR 1=1 and retrieved the contents of the ledger, which contained the flag.\n"},{"type":"image","imageType":"single","path":"t13","caption":""}]},{"name":"Reflections of the Crowd","category":"web","points":"20","description":"Secrets do not always hide in logs and ledgers. Sometimes they slip through the voices of customers. The portal proudly echoes whatever is spoken, yet it does so without care. Clever diners have noticed that when reflections are repeated without question, even a casual remark can twist into something dangerous. In that distortion, another secret of Chef’s book is exposed.\n\n","files":["https://meher-ctf.onrender.com/"],"flag":"THMxSFDC{xss_c0mm3nt_h4ck}","solution":[{"type":"heading","content":"Following the Story Clues"},{"type":"text","content":"The story talks about the “voice of customers” and echoes, hinting at user-submitted content.\nChecked the dashboard, found a reviews page where diners could submit input.\n"},{"type":"heading","content":"Testing for XSS"},{"type":"text","content":"The input was not sanitized, so tried a simple XSS payload:\n"},{"type":"code","language":"javascript","content":"<script>alert(1)</script>\n"},{"type":"text","content":"It successfully executed, confirming a Reflected XSS vulnerability.\nThe page revealed the flag in the process.\n"},{"type":"image","imageType":"single","path":"t14","caption":""}]},{"name":"The Hidden Pantry Ledger","category":"web","points":"50","description":"Behind the scenes of the portal lies a private ledger, a section meant only for trusted staff accounts. The locks on its digital shelves are weaker than they appear. A determined user who tampers with the right identifier can bypass the restriction and stumble upon records that were never meant for their eyes. Hidden among them lies yet another piece of the Chef’s secret book.\n\n","files":["https://meher-ctf.onrender.com/"],"flag":"THMxSFDC{1d0r_4dm1n_4cc3ss}","solution":[{"type":"heading","content":"Following the Story Clues"},{"type":"text","content":"The story mentioned a “private ledger” for trusted staff accounts, hinting at an admin-only section.\nChecked robots.txt and noticed a /admin path, likely where the private records are hidden.\n"},{"type":"heading","content":"Exploring the Admin Panel"},{"type":"text","content":"Navigated to /admin and found a panel listing all users.\nOpened the network tab and saw an API call:\n/api/users\nReturning a JSON of all users, their IDs, and admin status — exactly the information the story hinted we could uncover."},{"type":"image","imageType":"single","path":"t511","caption":""},{"type":"heading","content":"Accessing the Ledger"},{"type":"text","content":"From the JS source code, found an endpoint:\n/api/user/profile/{id}\nEach ID needed to be Base64 encoded.\nTried the IDs from /api/users after encoding them, and the API returned the corresponding user details."},{"type":"heading","content":"Finding the Flag"},{"type":"text","content":"Among the returned user data there was the flag, completing the final piece of the Chef’s secret book.\n"},{"type":"image","imageType":"single","path":"t512","caption":""}]},{"name":"Hospital Outbreak","category":"CTI","points":"50","description":"Analyse the logs (.csv) and answer the question.\n\nWhich threat actor was responsible for this incident?\n\n","files":[],"flag":"lazarus","solution":[{"type":"heading","content":"Initial Exploration"},{"type":"text","content":"Opened the CSV in a spreadsheet editor.\nExamined the columns and rows to understand the types of events recorded."},{"type":"heading","content":"Focusing on Suspicious Events"},{"type":"text","content":"Filtered the event_type column for file_create events.\nNoticed multiple files being created with the .wncry extension."},{"type":"image","imageType":"single","path":"t2","caption":""},{"type":"heading","content":"Connecting the Dots"},{"type":"text","content":".wncry is a known indicator of WannaCry ransomware.\nQuick research confirmed that WannaCry is attributed to the threat actor Lazarus."}]},{"name":"Silent Fetch","category":"CTI","points":"50","description":"Analyse the (.pcap) and answer the question.\n\nWhich threat actor was responsible for the activity observed in the provided PCAP?\n\n\n","files":[],"flag":"emotet","solution":[{"type":"heading","content":"Initial Exploration"},{"type":"text","content":"Opened the PCAP file in Wireshark.\nBrowsed through HTTP and DNS traffic to identify unusual requests."},{"type":"heading","content":"Identifying Suspicious Traffic"},{"type":"text","content":"Found repeated attempts to access a domain:\n\nmustache.webstory.sa\n\nThe traffic showed requests to /wp-admin, which looked suspicious."},{"type":"image","imageType":"single","path":"31","caption":""},{"type":"heading","content":"Domain Investigation"},{"type":"text","content":"Tried to access the domain in a browser, but it was inactive.\nPerformed an open-source search for mustache.webstory.sa."},{"type":"image","imageType":"single","path":"32","caption":""},{"type":"heading","content":"Threat Intelligence Correlation"},{"type":"text","content":"Found threat intel reports and documentaries linking this domain to Emotet malware campaigns.\nConcluded that the activity in the PCAP was related to the Emotet threat actor."}]}]}</script>
 </body>
 </html>
