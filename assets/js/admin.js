@@ -361,7 +361,9 @@ function generateIndexCardCode() {
 
     const code =
 `                    <!-- ${escapeHtml(ctfName)} -->
-                    <a class="ctf-card" href="${escapeHtml(filename)}" data-year="${escapeHtml(year)}">
+                    <a class="ctf-card" 
+                    href="${escapeHtml(filename)}" 
+                    data-year="${escapeHtml(year)}">
                         <div class="ctf-header">
                             <div class="ctf-icon">
                                 <i class="fas fa-trophy"></i>
