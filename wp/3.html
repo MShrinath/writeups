@@ -3,9 +3,413 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TCS HackQuest Round1 Writeup | mshrinath</title>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <meta name="description" content="Detailed writeup for TCS HackQuest Round1 challenges" />
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/writeup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    <script src="/assets/js/base.js" defer></script>
+    <script src="/assets/js/writeup.js" defer></script>
 </head>
 <body>
-    TCS PRIME
+    <div id="particles-js"></div>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to CTFs</span>
+                </a>
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home"></i> Portfolio
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="writeup-header">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="/">CTF Writeups</a>
+                    <i class="fas fa-chevron-right"></i>
+                    <span>TCS HackQuest Round1</span>
+                </div>
+
+                <h1 class="glitch-text" data-text="TCS HackQuest Round1">TCS HackQuest Round1</h1>
+
+                <div class="writeup-meta-grid">
+                    <div class="meta-card">
+                        <i class="far fa-calendar"></i>
+                        <div class="meta-content">
+                            <span class="meta-label">Date</span>
+                            <span class="meta-value">December 2025</span>
+                        </div>
+                    </div>
+                    <div class="meta-card">
+                        <i class="fas fa-flag-checkered"></i>
+                        <div class="meta-content">
+                            <span class="meta-label">Solved</span>
+                            <span class="meta-value">7 / 12</span>
+                        </div>
+                    </div>
+                    <div class="meta-card">
+                        <i class="fas fa-trophy"></i>
+                        <div class="meta-content">
+                            <span class="meta-label">Rank</span>
+                            <span class="meta-value">N/A</span>
+                        </div>
+                    </div>
+                    <div class="meta-card">
+                        <i class="fas fa-user"></i>
+                        <div class="meta-content">
+                            <span class="meta-label">Team</span>
+                            <span class="meta-value">Solo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overview-box">
+                    <h2>Overview</h2>
+                    <p>TCS HackQuest is a premier annual Capture The Flag (CTF) competition organized by Tata Consultancy Services for Indian engineering students, aimed at identifying cybersecurity talent.</p>
+                </div>
+
+                <div class="toc-box">
+                    <h3><i class="fas fa-list"></i> Challenges Solved</h3>
+                    <nav class="toc-nav">
+                        <a href="#challenge-1" class="toc-item">
+                            <span class="toc-number">01</span>
+                            <span class="toc-title">AREA 64</span>
+                            <span class="toc-category crypto">Crypto</span>
+                        </a>
+                        <a href="#challenge-2" class="toc-item">
+                            <span class="toc-number">02</span>
+                            <span class="toc-title">SMALL-E</span>
+                            <span class="toc-category reverse">Reverse</span>
+                        </a>
+                        <a href="#challenge-3" class="toc-item">
+                            <span class="toc-number">03</span>
+                            <span class="toc-title">HIDDEN LAYERS</span>
+                            <span class="toc-category steganography">Steganography</span>
+                        </a>
+                        <a href="#challenge-4" class="toc-item">
+                            <span class="toc-number">04</span>
+                            <span class="toc-title">DOT-TRACE</span>
+                            <span class="toc-category programming">Programming</span>
+                        </a>
+                        <a href="#challenge-5" class="toc-item">
+                            <span class="toc-number">05</span>
+                            <span class="toc-title">SYNTHETIC STACKS</span>
+                            <span class="toc-category forensics">Forensics</span>
+                        </a>
+                        <a href="#challenge-6" class="toc-item">
+                            <span class="toc-number">06</span>
+                            <span class="toc-title">ADDRESS ABYSS</span>
+                            <span class="toc-category forensics">Forensics</span>
+                        </a>
+                        <a href="#challenge-7" class="toc-item">
+                            <span class="toc-number">07</span>
+                            <span class="toc-title">INTERNAL AFFAIRS</span>
+                            <span class="toc-category web">Web</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </section>
+
+        <section class="challenges-section">
+            <div class="container">
+                <div id="challenge-1" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">01</div>
+                        <div class="challenge-title-group">
+                            <h2>AREA 64</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge crypto">Crypto</span>
+                                <span class="points-badge">? points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>CTF HackQuest Hiring CTF</p>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        <p>The challenge name “AREA64” strongly hints at Base64 encoding. Interpreting “64” as a reference to Base64, I attempted to decode the given data using Base64, and the decoding was successful, confirming the assumption.</p>
+                        <div class="image-wrapper">
+                            <img src="/assets/img/3/1.png" alt="" class="screenshot">
+                        </div>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>HQX{70c5d525ca2d0ac18f9f52a49bf4ccf8}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="challenge-2" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">02</div>
+                        <div class="challenge-title-group">
+                            <h2>SMALL-E</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge reverse">Reverse</span>
+                                <span class="points-badge">? points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>CTF HackQuest Hiring CTF</p>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        <p>The code looks like an RSA low-exponent attack, which means we can reverse it to recover the flag.</p>
+                        <div class="image-wrapper">
+                            <img src="/assets/img/3/2.png" alt="" class="screenshot">
+                        </div>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>HQX{36b86829662a9d83a915253f687a77ff}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="challenge-3" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">03</div>
+                        <div class="challenge-title-group">
+                            <h2>HIDDEN LAYERS</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge steganography">Steganography</span>
+                                <span class="points-badge">? points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>CTF HackQuest Hiring CTF</p>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        <p>The image appeared to involve a steganography-related issue. A basic automated scan was performed using a reliable online steganography analysis platform, AperiSolve (outhorseyourstego.com).</p>
+                        <div class="image-wrapper">
+                            <img src="/assets/img/3/3.png" alt="" class="screenshot">
+                        </div>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>HQX{24c0ce09e022506a1bae14439d1d48f0}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="challenge-4" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">04</div>
+                        <div class="challenge-title-group">
+                            <h2>DOT-TRACE</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge programming">Programming</span>
+                                <span class="points-badge">? points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>CTF HackQuest Hiring CTF</p>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        <p>The challenge included a Base64-encoded string. After decoding it, I found the encoding code that was used to create the flag. </p>
+                        <div class="image-wrapper">
+                            <img src="/assets/img/3/4.png" alt="" class="screenshot">
+                        </div>
+                        <p>By reversing the code and using the encrypted output as the input file, we can decode it and print the flag.</p>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>HQX{ba44805fbe32dc33f1297cacb2af175e}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="challenge-5" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">05</div>
+                        <div class="challenge-title-group">
+                            <h2>SYNTHETIC STACKS</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge forensics">Forensics</span>
+                                <span class="points-badge">? points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>CTF HackQuest Hiring CTF</p>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        <p>The given file was an .ico file. Running file file.ico showed that it was actually a 7zip archive. So I renamed it to .7z and tried extracting it, but it turned out to be password-protected</p>
+                        <div class="image-grid">
+                            <img src="/assets/img/3/5.png" alt="Image 1" class="screenshot">
+                            <img src="/assets/img/3/6.png" alt="Image 2" class="screenshot">
+                        </div>
+                        <p>Next, I used zip2john to crack the password. The recovered password was “tifanny”. After unzipping, there was a file containing some random-looking text</p>
+                        <div class="image-wrapper">
+                            <img src="/assets/img/3/7.png" alt="" class="screenshot">
+                        </div>
+                        <p>That text was Base64-encoded. Decoding it produced an image, which turned out to be a QR code. Scanning the QR code finally gave the flag</p>
+                        <div class="image-grid">
+                            <img src="/assets/img/3/8.png" alt="Image 1" class="screenshot">
+                            <img src="/assets/img/3/9.png" alt="Image 2" class="screenshot">
+                        </div>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>HQX{df30cb178e5a976a8196a43e6551c8de}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="challenge-6" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">06</div>
+                        <div class="challenge-title-group">
+                            <h2>ADDRESS ABYSS</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge forensics">Forensics</span>
+                                <span class="points-badge">? points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>CTF HackQuest Hiring CTF</p>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        <p>Since the challenge mentions logs, it felt like working with an incident report. The task was to validate IPv4 and IPv6 addresses. Only IPs matching the patterns 92.7.X.Y and 2510:a1:X::Y were considered valid, where X represents the index and Y represents the value.</p>
+                        <p>We can take the log file as input, validate each IP address, and extract the index–value pairs from the valid ones. Finally, sorting the values by their index and joining them together reveals the flag.</p>
+                        <div class="image-wrapper">
+                            <img src="/assets/img/3/10.png" alt="" class="screenshot">
+                        </div>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>HQX{e1f63411d0ef7e8cfdf6d4bb0860d9f4}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="challenge-7" class="challenge-writeup">
+                    <div class="challenge-header">
+                        <div class="challenge-number">07</div>
+                        <div class="challenge-title-group">
+                            <h2>INTERNAL AFFAIRS</h2>
+                            <div class="challenge-meta">
+                                <span class="category-badge web">Web</span>
+                                <span class="points-badge">? points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="challenge-description">
+                        <h3><i class="fas fa-file-alt"></i> Challenge Description</h3>
+                        <p>CTF HackQuest Hiring CTF</p>
+                    </div>
+
+                    <div class="writeup-content">
+                        <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                        <div class="info-box info">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                Sorry about the lack of screenshots — I forgot to capture them before the CTF closed, my bad.
+                            </div>
+                        </div>
+                        <p>The challenge description mentioned that a Tomcat port was open. Also, the provided challenge link was accepting URLs as input and displaying their contents on the page. Seeing this behavior immediately made me think that the challenge was based on SSRF.</p>
+                        <p>To test this, I tried accessing http://0.0.0.0:8080, since 8080 is the default port used by Apache Tomcat. This request worked and loaded the same website again, but this time there were tags and indicators showing that it was dev access, which confirmed that internal services were reachable.</p>
+                        <p>After that, I started poking around the internal site and tried visiting the /admin path. The page responded with a message saying that the admin section was under development and not accessible to the public.</p>
+                        <p>However, when I inspected the response, there was additional information that wasn’t visible on the page itself. It referenced another internal API endpoint (something like /api/...).</p>
+                        <p>Trying that API path directly finally revealed the flag</p>
+                    </div>
+
+                    <div class="flag-section">
+                        <h3><i class="fas fa-flag"></i> Flag</h3>
+                        <div class="flag-box">
+                            <code>HQX{1333ed0d14f40469103b372869c6d515}</code>
+                            <button class="copy-btn" onclick="copyFlag(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 mshrinath</p>
+                <div class="footer-links">
+                    <a href="https://github.com/mshrinath" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+                    <span class="separator">•</span>
+                    <a href="https://linkedin.com/in/mshrinath" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
