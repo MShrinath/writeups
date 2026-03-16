@@ -1,0 +1,202 @@
+{
+  "ctf": {
+    "name": "TCS HackQuest Round1",
+    "month": "December",
+    "year": "2025",
+    "total_challenges": "12",
+    "rank": "N/A",
+    "team": "solo",
+    "teamName": "",
+    "overview": "TCS HackQuest is a premier annual Capture The Flag (CTF) competition organized by Tata Consultancy Services for Indian engineering students, aimed at identifying cybersecurity talent."
+  },
+  "challenges": [
+    {
+      "name": "AREA 64",
+      "category": "crypto",
+      "points": "",
+      "description": "CTF HackQuest Hiring CTF",
+      "files": [],
+      "flag": "HQX{70c5d525ca2d0ac18f9f52a49bf4ccf8}",
+      "solution": [
+        {
+          "type": "text",
+          "content": "The challenge name “AREA64” strongly hints at Base64 encoding. Interpreting “64” as a reference to Base64, I attempted to decode the given data using Base64, and the decoding was successful, confirming the assumption."
+        },
+        {
+          "type": "image",
+          "imageType": "single",
+          "path": "/assets/img/3/1.png",
+          "caption": ""
+        }
+      ]
+    },
+    {
+      "name": "SMALL-E",
+      "category": "reverse",
+      "points": "",
+      "description": "CTF HackQuest Hiring CTF",
+      "files": [],
+      "flag": "HQX{36b86829662a9d83a915253f687a77ff}",
+      "solution": [
+        {
+          "type": "text",
+          "content": "The code looks like an RSA low-exponent attack, which means we can reverse it to recover the flag."
+        },
+        {
+          "type": "image",
+          "imageType": "single",
+          "path": "/assets/img/3/2.png",
+          "caption": ""
+        }
+      ]
+    },
+    {
+      "name": "HIDDEN LAYERS",
+      "category": "steganography",
+      "points": "",
+      "description": "CTF HackQuest Hiring CTF",
+      "files": [],
+      "flag": "HQX{24c0ce09e022506a1bae14439d1d48f0}",
+      "solution": [
+        {
+          "type": "text",
+          "content": "The image appeared to involve a steganography-related issue. A basic automated scan was performed using a reliable online steganography analysis platform, AperiSolve (outhorseyourstego.com)."
+        },
+        {
+          "type": "image",
+          "imageType": "single",
+          "path": "/assets/img/3/3.png",
+          "caption": ""
+        }
+      ]
+    },
+    {
+      "name": "DOT-TRACE",
+      "category": "programming",
+      "points": "",
+      "description": "CTF HackQuest Hiring CTF",
+      "files": [],
+      "flag": "HQX{ba44805fbe32dc33f1297cacb2af175e}",
+      "solution": [
+        {
+          "type": "text",
+          "content": "The challenge included a Base64-encoded string. After decoding it, I found the encoding code that was used to create the flag."
+        },
+        {
+          "type": "image",
+          "imageType": "single",
+          "path": "/assets/img/3/4.png",
+          "caption": ""
+        },
+        {
+          "type": "text",
+          "content": "By reversing the code and using the encrypted output as the input file, we can decode it and print the flag."
+        }
+      ]
+    },
+    {
+      "name": "SYNTHETIC STACKS",
+      "category": "forensics",
+      "points": "",
+      "description": "CTF HackQuest Hiring CTF",
+      "files": [],
+      "flag": "HQX{df30cb178e5a976a8196a43e6551c8de}",
+      "solution": [
+        {
+          "type": "text",
+          "content": "The given file was an .ico file. Running file file.ico showed that it was actually a 7zip archive. So I renamed it to .7z and tried extracting it, but it turned out to be password-protected"
+        },
+        {
+          "type": "image",
+          "imageType": "grid",
+          "images": [
+            "/assets/img/3/5.png",
+            "/assets/img/3/6.png"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Next, I used zip2john to crack the password. The recovered password was “tifanny”. After unzipping, there was a file containing some random-looking text"
+        },
+        {
+          "type": "image",
+          "imageType": "single",
+          "path": "/assets/img/3/7.png",
+          "caption": ""
+        },
+        {
+          "type": "text",
+          "content": "That text was Base64-encoded. Decoding it produced an image, which turned out to be a QR code. Scanning the QR code finally gave the flag"
+        },
+        {
+          "type": "image",
+          "imageType": "grid",
+          "images": [
+            "/assets/img/3/8.png",
+            "/assets/img/3/9.png"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ADDRESS ABYSS",
+      "category": "forensics",
+      "points": "",
+      "description": "CTF HackQuest Hiring CTF",
+      "files": [],
+      "flag": "HQX{e1f63411d0ef7e8cfdf6d4bb0860d9f4}",
+      "solution": [
+        {
+          "type": "text",
+          "content": "Since the challenge mentions logs, it felt like working with an incident report. The task was to validate IPv4 and IPv6 addresses. Only IPs matching the patterns 92.7.X.Y and 2510:a1:X::Y were considered valid, where X represents the index and Y represents the value."
+        },
+        {
+          "type": "text",
+          "content": "We can take the log file as input, validate each IP address, and extract the index–value pairs from the valid ones. Finally, sorting the values by their index and joining them together reveals the flag."
+        },
+        {
+          "type": "image",
+          "imageType": "single",
+          "path": "/assets/img/3/10.png",
+          "caption": ""
+        }
+      ]
+    },
+    {
+      "name": "INTERNAL AFFAIRS",
+      "category": "web",
+      "points": "",
+      "description": "CTF HackQuest Hiring CTF",
+      "files": [],
+      "flag": "HQX{1333ed0d14f40469103b372869c6d515}",
+      "solution": [
+        {
+          "type": "infobox",
+          "variant": "info",
+          "title": "",
+          "content": "Sorry about the lack of screenshots — I forgot to capture them before the CTF closed, my bad."
+        },
+        {
+          "type": "text",
+          "content": "The challenge description mentioned that a Tomcat port was open. Also, the provided challenge link was accepting URLs as input and displaying their contents on the page. Seeing this behavior immediately made me think that the challenge was based on SSRF."
+        },
+        {
+          "type": "text",
+          "content": "To test this, I tried accessing http://0.0.0.0:8080, since 8080 is the default port used by Apache Tomcat. This request worked and loaded the same website again, but this time there were tags and indicators showing that it was dev access, which confirmed that internal services were reachable."
+        },
+        {
+          "type": "text",
+          "content": "After that, I started poking around the internal site and tried visiting the /admin path. The page responded with a message saying that the admin section was under development and not accessible to the public."
+        },
+        {
+          "type": "text",
+          "content": "However, when I inspected the response, there was additional information that wasn’t visible on the page itself. It referenced another internal API endpoint (something like /api/...)."
+        },
+        {
+          "type": "text",
+          "content": "Trying that API path directly finally revealed the flag"
+        }
+      ]
+    }
+  ]
+}
