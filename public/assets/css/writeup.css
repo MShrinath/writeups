@@ -581,9 +581,8 @@
     }
 
     .toc-item {
-        grid-template-columns: 36px 1fr auto;
-        gap: 8px 10px;
-        padding: 12px;
+        grid-template-columns: 1fr;
+        gap: 10px;
     }
 
     .flag-box {
@@ -668,5 +667,101 @@
 
     .code-block code {
         font-size: 0.82rem;
+    }
+}
+
+
+/* ===========================
+   PDF EXPORT BAR & HEADER TOP
+=========================== */
+.header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.header-top .breadcrumb {
+    margin-bottom: 0;
+}
+
+.pdf-export-bar {
+    flex-shrink: 0;
+}
+
+.pdf-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, var(--primary) 0%, #20c997 100%);
+    color: var(--bg-darker);
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 4px 14px rgba(100, 255, 218, 0.15);
+    transition: all 0.25s ease;
+}
+
+.pdf-download-btn i {
+    font-size: 1rem;
+}
+
+.pdf-download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(100, 255, 218, 0.3);
+    opacity: 0.95;
+}
+
+.pdf-download-btn:active {
+    transform: translateY(0);
+}
+
+.pdf-download-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+@media (max-width: 768px) {
+    .header-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}
+
+/* ===========================
+   PRINT FALLBACK (Ctrl+P)
+=========================== */
+@media print {
+    #particles-js,
+    .main-header,
+    .breadcrumb,
+    .copy-btn,
+    .pdf-export-bar,
+    .writeup-navigation,
+    footer {
+        display: none !important;
+    }
+
+    @page {
+        margin: 1.5cm;
+    }
+
+    body {
+        background: #ffffff !important;
+        color: #1a1a1a !important;
+    }
+
+    .challenge-writeup {
+        page-break-before: always;
+        break-before: page;
     }
 }

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/assets/css/writeup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
     <script src="/assets/js/base.js" defer></script>
     <script src="/assets/js/writeup.js" defer></script>
 </head>
@@ -33,10 +34,17 @@
     <main>
         <section class="writeup-header">
             <div class="container">
-                <div class="breadcrumb">
-                    <a href="/">CTF Writeups</a>
-                    <i class="fas fa-chevron-right"></i>
-                    <span>TCS HackQuest Round1</span>
+                <div class="header-top">
+                    <div class="breadcrumb">
+                        <a href="/">CTF Writeups</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>TCS HackQuest Round1</span>
+                    </div>
+                    <div class="pdf-export-bar">
+                        <button id="btn-download-pdf" class="pdf-download-btn">
+                            <i class="fas fa-file-pdf"></i> Export to PDF
+                        </button>
+                    </div>
                 </div>
 
                 <h1 class="glitch-text" data-text="TCS HackQuest Round1">TCS HackQuest Round1</h1>

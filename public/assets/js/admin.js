@@ -655,6 +655,7 @@ function generateHTML(ctf, challenges) {
     html += '    <link rel="stylesheet" href="/assets/css/writeup.css">\n';
     html += '    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">\n';
     html += '    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer><\/script>\n';
+    html += '    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer><\/script>\n';
     html += '    <script src="/assets/js/base.js" defer><\/script>\n';
     html += '    <script src="/assets/js/writeup.js" defer><\/script>\n';
     html += '</head>\n';
@@ -692,10 +693,17 @@ function generateHeaderSection(ctf, challenges) {
     
     html += '        <section class="writeup-header">\n';
     html += '            <div class="container">\n';
-    html += '                <div class="breadcrumb">\n';
-    html += '                    <a href="/">CTF Writeups</a>\n';
-    html += '                    <i class="fas fa-chevron-right"></i>\n';
-    html += '                    <span>' + escapeHtml(ctf.name) + '</span>\n';
+    html += '                <div class="header-top">\n';
+    html += '                    <div class="breadcrumb">\n';
+    html += '                        <a href="/">CTF Writeups</a>\n';
+    html += '                        <i class="fas fa-chevron-right"></i>\n';
+    html += '                        <span>' + escapeHtml(ctf.name) + '</span>\n';
+    html += '                    </div>\n';
+    html += '                    <div class="pdf-export-bar">\n';
+    html += '                        <button id="btn-download-pdf" class="pdf-download-btn">\n';
+    html += '                            <i class="fas fa-file-pdf"></i> Export to PDF\n';
+    html += '                        </button>\n';
+    html += '                    </div>\n';
     html += '                </div>\n\n';
     
     html += '                <h1 class="glitch-text" data-text="' + escapeHtml(ctf.name) + '">' + escapeHtml(ctf.name) + '</h1>\n\n';
